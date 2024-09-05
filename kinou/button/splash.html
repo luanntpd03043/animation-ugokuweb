@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>きらっと光る</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        /*きらっと光る*/
+
+        .btnshine {
+            /*キラッと光る基点とするためrelativeを指定*/
+            position: relative;
+            /*ボタンの形状*/
+            display: inline-block;
+            background: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            outline: none;
+            overflow: hidden;
+        }
+
+        /*キラッと光る*/
+        .btnshine::before {
+            content: '';
+            /*絶対配置でキラッと光るの位置を決める*/
+            position: absolute;
+            top: 0;
+            left: -75%;
+            /*キラッと光る形状*/
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, .3) 100%);
+            transform: skewX(-25deg);
+        }
+
+        /*hoverした際の移動のアニメーション*/
+        .btnshine:hover::before {
+            animation: shine 0.7s;
+        }
+
+        @keyframes shine {
+            100% {
+                left: 125%;
+            }
+        }
+
+        /*========= レイアウトのためのCSS ===============*/
+
+        body {
+            vertical-align: middle;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        p {
+            margin: 0 0 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <a href="#" class="btnshine">7-1-40 きらっと光る</a>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+
+    </script>
+</body>
+
+</html>

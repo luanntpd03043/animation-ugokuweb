@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>星がキラキラ</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        /*========= レイアウトのためのCSS ===============*/
+
+        #wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+        }
+
+        a {
+            color: #fff;
+        }
+
+        /*========= particle js を描画するエリア設定 ===============*/
+
+        html,
+        body {
+            height: 100%;
+            /*高さを100%にして描画エリアをとる*/
+        }
+
+        #particles-js {
+            position: fixed;
+            /*描画固定*/
+            z-index: -1;
+            /*描画を一番下に*/
+            width: 100%;
+            height: 100%;
+            background-color: #070A31;
+            /*背景色*/
+        }
+
+        #wrap {
+            position: relative;
+            /*描画を#particles-jsよりも上にするためposition:relative;を指定*/
+            z-index: 1;
+            /*z-indexの数字を大きくすることで描画を#particles-jsよりも上に*/
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <div id="particles-js"></div>
+            <div id="wrap">
+                <p>コンテンツが入ります<br>※使用したライブラリ<a href="https://vincentgarreau.com/particles.js/" target="_blank">https://vincentgarreau.com/particles.js/</a></p>
+                <!--/wrapper-->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 346,//この数値を変更すると星の数が増減できる
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ffffff"
+                },
+                "shape": {
+                    "type": "circle",//形状はcircleを指定
+                    "stroke": {
+                        "width": 0
+                    },
+                },
+                "opacity": {
+                    "value": 1,//シェイプの透明度
+                    "random": true,//シェイプの透明度をランダムにする
+                    "anim": {
+                        "enable": true,//シェイプの透明度をアニメーションさせる
+                        "speed": 3,//シェイプの透明度をアニメーションさせる
+                        "opacity_min": 0,//透明度の最小値０
+                        "sync": false//全てを同時にアニメーションさせない
+                    }
+                },
+                "size": {
+                    "value": 2,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 4,
+                        "size_min": 0.3,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": false,
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 120,//この数値を小さくするとゆっくりな動きになる
+                    "direction": "none",//方向指定なし
+                    "random": true,//動きはランダムに
+                    "straight": true,//動きをとどめる
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 600
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": false,
+                    },
+                    "onclick": {
+                        "enable": false,
+                    },
+                    "resize": true
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>複数の画像を一覧で見せる</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css" />
+    <style>
+        /*==================================================
+ギャラリーのためのcss
+===================================*/
+        .gallery {
+            columns: 4;
+            /*段組みの数*/
+            padding: 0 15px;
+            /*ギャラリー左右に余白をつける*/
+        }
+
+        .gallery li {
+            margin-bottom: 20px;
+            /*各画像下に余白をつける*/
+        }
+
+        /*ギャラリー内のイメージは横幅100%にする*/
+        .gallery img {
+            width: 100%;
+            height: auto;
+            vertical-align: bottom;
+            /*画像の下にできる余白を削除*/
+        }
+
+        /*　横幅900px以下の段組み設定　*/
+        @media only screen and (max-width: 900px) {
+            .gallery {
+                columns: 3;
+            }
+        }
+
+        @media only screen and (max-width: 768px) {
+            .gallery {
+                columns: 2;
+            }
+        }
+
+
+        /*========= レイアウトのためのCSS ===============*/
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        a {
+            color: #333;
+        }
+
+        a:hover,
+        a:active {
+            text-decoration: none;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 6vw;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin: 30px 0;
+        }
+
+        p {
+            margin: 0 10px 10px 10px;
+            word-wrap: break-word;
+        }
+
+        /*画像を出現させるアニメーションCSS*/
+
+        .flipLeft {
+            animation-name: flipLeft;
+            animation-duration: 0.5s;
+            animation-fill-mode: forwards;
+            perspective-origin: left center;
+            opacity: 0;
+        }
+
+        @keyframes flipLeft {
+            from {
+                transform: perspective(600px) translate3d(0, 0, 0) rotateY(30deg);
+                opacity: 0;
+            }
+
+            to {
+                transform: perspective(600px) translate3d(0, 0, 0) rotateY(0deg);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <div class="wrapper">
+                <h1>Gallery</h1>
+                <p>画像一覧の列調整：CSS</p>
+                <p>画像の出現のくるっとした動き：CSS　× jQuery</p>
+                <p>画像拡大に使用したライブラリ：<a href="https://lokeshdhakar.com/projects/lightbox2/" target="_blank">https://lokeshdhakar.com/projects/lightbox2/</a></p>
+
+                <ul class="gallery">
+                    <li><a href="img/list/01.jpg" data-lightbox="gallery1" data-title="グループ1キャプション"><img src="img/list/01.jpg" alt=""></a></li>
+                    <li><a href="img/list/02.jpg" data-lightbox="gallery1" data-title="グループ1キャプション"><img src="img/list/02.jpg" alt=""></a></li>
+                    <li><a href="img/list/03.jpg" data-lightbox="gallery1" data-title="グループ1キャプション"><img src="img/list/03.jpg" alt=""></a></li>
+                    <li><a href="img/list/04.jpg" data-lightbox="gallery1" data-title="グループ1キャプション"><img src="img/list/04.jpg" alt=""></a></li>
+                    <li><a href="img/list/05.jpg" data-lightbox="gallery1" data-title="グループ1キャプション"><img src="img/list/05.jpg" alt=""></a></li>
+                    <li><a href="img/list/06.jpg" data-lightbox="gallery1" data-title="グループ1キャプション"><img src="img/list/06.jpg" alt=""></a></li>
+                    <li><a href="img/list/07.jpg" data-lightbox="gallery1" data-title="グループ1キャプション"><img src="img/list/07.jpg" alt=""></a></li>
+                    <li><a href="img/list/08.jpg" data-lightbox="gallery1" data-title="グループ1キャプション"><img src="img/list/08.jpg" alt=""></a></li>
+                    <li><a href="img/list/09.jpg" data-lightbox="gallery1" data-title="グループ1キャプション"><img src="img/list/09.jpg" alt=""></a></li>
+                    <li><a href="img/list/10.jpg" data-lightbox="gallery1" data-title="グループ1キャプション"><img src="img/list/10.jpg" alt=""></a></li>
+                    <li><a href="img/list/11.jpg" data-lightbox="gallery1" data-title="グループ1キャプション"><img src="img/list/11.jpg" alt=""></a></li>
+                    <li><a href="img/list/12.jpg" data-lightbox="gallery1" data-title="グループ1キャプション"><img src="img/list/12.jpg" alt=""></a></li>
+                    <li><a href="img/list/13.jpg" data-lightbox="gallery1" data-title="グループ1キャプション"><img src="img/list/13.jpg" alt=""></a></li>
+                    <li><a href="img/list/14.jpg" data-lightbox="gallery1" data-title="グループ1キャプション"><img src="img/list/14.jpg" alt=""></a></li>
+                    <li><a href="img/list/15.jpg" data-lightbox="gallery1" data-title="グループ1キャプション"><img src="img/list/15.jpg" alt=""></a></li>
+                    <li><a href="img/list/16.jpg" data-lightbox="gallery1" data-title="グループ1キャプション"><img src="img/list/16.jpg" alt=""></a></li>
+                    <li><a href="img/list/17.jpg" data-lightbox="gallery2" data-title="グループ2キャプション"><img src="img/list/17.jpg" alt=""></a></li>
+                    <li><a href="img/list/18.jpg" data-lightbox="gallery2" data-title="グループ2キャプション"><img src="img/list/18.jpg" alt=""></a></li>
+                    <li><a href="img/list/19.jpg" data-lightbox="gallery2" data-title="グループ2キャプション"><img src="img/list/19.jpg" alt=""></a></li>
+                    <li><a href="img/list/20.jpg" data-lightbox="gallery2" data-title="グループ2キャプション"><img src="img/list/20.jpg" alt=""></a></li>
+                    <li><a href="img/list/21.jpg" data-lightbox="gallery2" data-title="グループ2キャプション"><img src="img/list/21.jpg" alt=""></a></li>
+                    <li><a href="img/list/22.jpg" data-lightbox="gallery2" data-title="グループ2キャプション"><img src="img/list/22.jpg" alt=""></a></li>
+                    <li><a href="img/list/23.jpg" data-lightbox="gallery2" data-title="グループ2キャプション"><img src="img/list/23.jpg" alt=""></a></li>
+                    <li><a href="img/list/24.jpg" data-lightbox="gallery2" data-title="グループ2キャプション"><img src="img/list/24.jpg" alt=""></a></li>
+                    <li><a href="img/list/25.jpg" data-lightbox="gallery3" data-title="グループ3キャプション"><img src="img/list/25.jpg" alt=""></a></li>
+                    <li><a href="img/list/26.jpg" data-lightbox="gallery3" data-title="グループ3キャプション"><img src="img/list/26.jpg" alt=""></a></li>
+                    <li><a href="img/list/27.jpg" data-lightbox="gallery3" data-title="グループ3キャプション"><img src="img/list/27.jpg" alt=""></a></li>
+                    <li><a href="img/list/28.jpg" data-lightbox="gallery3" data-title="グループ3キャプション"><img src="img/list/28.jpg" alt=""></a></li>
+                    <li><a href="img/list/29.jpg" data-lightbox="gallery3" data-title="グループ3キャプション"><img src="img/list/29.jpg" alt=""></a></li>
+                    <li><a href="img/list/30.jpg" data-lightbox="gallery3" data-title="グループ3キャプション"><img src="img/list/30.jpg" alt=""></a></li>
+                </ul>
+                <!--/wrapper-->
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox.min.js"></script>
+    <script>
+        //lightbox オプションの設定※https://lokeshdhakar.com/projects/lightbox2/#options参照
+
+        lightbox.option({
+            'wrapAround': true,//グループ最後の写真の矢印をクリックしたらグループ最初の写真に戻る
+            'albumLabel': ' %1 / total %2 '//合計枚数中現在何枚目かというキャプションの見せ方を変更できる
+        })
+
+        //ふわっと見せるためのJS。3-5-3 ページが読み込まれたらすぐに動かしたい&画面をスクロールをしたら動かしたい場合内のソースコード使用
+
+        function fadeAnime() {
+            // flipLeft
+            $('.gallery li').each(function () {
+                var elemPos = $(this).offset().top;
+                var scroll = $(window).scrollTop();
+                var windowHeight = $(window).height();
+                if (scroll >= elemPos - windowHeight) {
+                    $(this).addClass('flipLeft');
+                } else {
+                    $(this).removeClass('flipLeft');
+                }
+            });
+        }
+
+        // 画面をスクロールをしたら動かしたい場合の記述
+        $(window).scroll(function () {
+            fadeAnime();/* アニメーション用の関数を呼ぶ*/
+        });// ここまで画面をスクロールをしたら動かしたい場合の記述
+
+        // ページが読み込まれたらすぐに動かしたい場合の記述
+        $(window).on('load', function () {
+            fadeAnime();/* アニメーション用の関数を呼ぶ*/
+        });// ここまでページが読み込まれたらすぐに動かしたい場合の記述
+    </script>
+</body>
+
+</html>

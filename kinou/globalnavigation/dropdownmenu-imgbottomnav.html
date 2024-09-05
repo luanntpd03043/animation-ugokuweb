@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ドロップダウンメニュー（写真付 上ナビ）</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        @charset "utf-8";
+
+        /*========= ドロップダウンのためのCSS ===============*/
+
+        /*==ナビゲーション全体の設定*/
+        nav{
+        background:#333;
+        color:#fff;
+        text-align: center;
+        }
+
+        /*ナビゲーションを横並びに*/
+        nav ul{
+            /*2階層目の基点にするためrelativeを指定*/
+        position: relative;
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        }
+
+        /*2階層目以降は横並びにしない*/
+        nav ul ul{
+        display: block;
+        }
+
+        /*ナビゲーションのリンク設定*/
+        nav ul li a{
+            /*矢印の基点にするためrelativeを指定*/
+        position: relative;
+        display: block;
+        text-decoration: none;
+        color: #999;
+        padding:12px 45px;
+        transition:all .3s;
+        }
+
+        nav ul li li a{
+        padding:20px;
+        }
+
+        nav ul li a:hover{
+        color:#fff; 
+        }
+
+        /*==矢印の設定*/
+
+        /*2階層目を持つliの矢印の設定*/
+
+        nav ul li.has-child > a::before{
+        content:'';
+        position: absolute;
+        left:15px;
+        top:25px;
+        width:6px;
+        height:6px;
+        border-top: 2px solid #999;
+            border-right:2px solid #999;
+            transform: rotate(135deg);
+        }
+
+        /*==2階層目以降の画像設定*/
+
+        nav ul li.has-child img{
+        max-width: 100%;
+        height: auto;
+        transition: all .5s;
+        vertical-align: bottom;
+        }
+
+        /*hoverしたら画像拡大*/
+        nav ul li.has-child img:hover{
+        transform: scale(1.2);
+        }
+
+        nav ul li.has-child dt{
+        overflow: hidden;
+        height: 20vh;
+        margin:0 0 20px 0;
+        }
+
+        @media screen and (max-width:1200px){
+        nav ul li.has-child dt{
+        height: 12vh;
+        }
+        
+        }
+
+        /*== 2層目の設定 */
+
+        nav li.has-child ul{
+        /*絶対配置で位置を指定*/
+            position: absolute;
+        left:5%;
+        top:58px;
+        z-index: 4;
+        /*子要素を横並びに*/    
+        justify-content: space-between;
+        flex-wrap: wrap;
+            /*形状を指定*/
+        background:#888;
+        width:90%;
+            /*はじめは非表示*/
+        display: none;
+        visibility: hidden;
+        opacity: 0;
+            /*アニメーション設定*/
+        transition: all .3s;
+        }
+
+        /*hoverしたら表示*/
+        nav li.has-child:hover > ul{
+        visibility: visible;
+        opacity: 1;
+        display: flex;
+        }
+
+        /*各ナビゲーション横幅*/
+        nav li.has-child ul li{
+        width:20%;
+        }
+
+        /*ナビゲーションaタグの形状*/
+        nav li.has-child ul li a{
+        color: #fff;
+        }
+
+        nav li.has-child ul li a:hover,
+        nav li.has-child ul li a:active{
+        background:#3577CA;
+        }
+
+        /*==768px以下の形状*/
+        @media screen and (max-width:768px){
+        
+        nav ul{
+            display: block;
+        }
+
+        nav li.has-child ul{
+            position: relative;
+        left:0;
+        top:0;
+        width:100%;
+        visibility:visible;/*JSで制御するため一旦表示*/
+        opacity:1;/*JSで制御するため一旦表示*/
+        display: none;/*JSのslidetoggleで表示させるため非表示に*/
+        transition:none;/*JSで制御するためCSSのアニメーションを切る*/
+        }
+            nav li.has-child:hover > ul {
+            display: none;
+            }
+        nav li.has-child ul li{
+            width:100%;
+            text-align: left;
+        }
+        
+        nav li.has-child ul li dl{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav li.has-child ul li dt{
+            width:30%;
+            height: auto;
+            margin: 0;
+        }
+
+        nav li.has-child ul li dd{
+            width:64%;      
+        }
+
+            
+            nav ul li a{
+            padding: 5px 20px;
+            border-bottom:1px solid #ccc;
+        }
+            
+            nav ul li li a{
+            padding: 0;
+        }
+        
+        /*矢印の位置と向き*/
+        
+        nav ul li.has-child > a::before{
+        top:17px;
+        left:20px;
+            transform: rotate(135deg);
+        }
+            
+        nav ul li.has-child.active > a::before{
+            transform: rotate(-45deg);
+        }
+        }
+
+        /*========= レイアウトのためのCSS ===============*/
+
+        h1{
+        font-size:2rem;
+        text-align: center;
+        text-transform: uppercase;
+        padding: 20px;
+        }
+
+        h2{
+        font-size:1.2rem;
+        text-align: center;
+        margin: 0 0 30px 0;
+        }
+
+        p{
+        margin-top:20px;  
+        }
+
+        small{
+        background:#333;
+        color:#fff;
+        display: block;
+        text-align: center;
+        padding:20px;
+        }
+
+
+        section{
+        padding:30px;
+        }
+
+        section:nth-child(2n){
+        background:#f3f3f3; 
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <h1 class="title">ドロップダウンメニュー（写真付 上ナビ）</h1>
+        <div id="content">
+            <header id="header">
+                <h1>Logo</h1>
+                
+                <nav>
+                <ul>
+                  <li><a href="#">Top</a></li>
+                  <li class="has-child"><a href="#">About</a>
+                    <ul>
+            
+                        <li><a href="#"><dl>
+                          <dt><img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/5-1-3/img/01.jpg" alt=""></dt>
+                          <dd>About Top</dd>
+                          </dl></a></li>
+                        <li><a href="#"><dl>
+                          <dt><img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/5-1-3/img/02.jpg" alt=""></dt>
+                          <dd>About-1</dd>
+                          </dl></a></li>
+                        <li><a href="#"><dl>
+                          <dt><img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/5-1-3/img/03.jpg" alt=""></dt>
+                          <dd>About-2</dd>
+                          </dl></a></li>
+                        <li><a href="#"><dl>
+                          <dt><img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/5-1-3/img/04.jpg" alt=""></dt>
+                          <dd>About-3</dd>
+                          </dl></a></li>
+                        <li><a href="#"><dl>
+                          <dt><img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/5-1-3/img/05.jpg" alt=""></dt>
+                          <dd>About-4</dd>
+                          </dl></a></li>
+            
+                    </ul>
+                  </li>
+            
+                  <li class="has-child"><a href="#">Service</a>
+                    <ul>
+            
+                        <li><a href="#"><dl>
+                          <dt><img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/5-1-3/img/06.jpg" alt=""></dt>
+                          <dd>Service Top</dd>
+                          </dl></a></li>
+                        <li><a href="#"><dl>
+                          <dt><img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/5-1-3/img/07.jpg" alt=""></dt>
+                          <dd>Service-1</dd>
+                          </dl></a></li>
+                        <li><a href="#"><dl>
+                          <dt><img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/5-1-3/img/08.jpg" alt=""></dt>
+                          <dd>Service-2</dd>
+                          </dl></a></li>
+                        <li><a href="#"><dl>
+                          <dt><img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/5-1-3/img/09.jpg" alt=""></dt>
+                          <dd>Service-3</dd>
+                          </dl></a></li>
+                        <li><a href="#"><dl>
+                          <dt><img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/5-1-3/img/10.jpg" alt=""></dt>
+                          <dd>Service-4</dd>
+                          </dl></a></li>
+            
+                    </ul>
+                  </li>
+                  <li><a href="#">Blog</a></li>
+                </ul>
+              </nav>
+                
+              </header>
+                
+              <main>
+                <section id="area-1">
+                  <h2>Area 1</h2>
+                  <p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+                  <p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+                        <p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+                        <p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+                <!--/area1--></section>
+                  <section id="area-2">
+                  <h2>Area 2</h2>
+                  <p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+                  <p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+                  <p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+                  <p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+                  <p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+            
+                <!--/area2--></section>
+                  <section id="area-3">
+                  <h2>Area 3</h2>
+                  <p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+                  <p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+                  <p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+                  <p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+                  <p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+            
+                <!--/area3--></section>
+              <!--/main--></main>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!--自作のJS-->
+    <script>
+        //ドロップダウンの設定を関数でまとめる
+        function mediaQueriesWin(){
+        var width = $(window).width();
+        if(width <= 768) {//横幅が768px以下の場合
+            $(".has-child>a").off('click'); //has-childクラスがついたaタグのonイベントを複数登録を避ける為offにして一旦初期状態へ
+            $(".has-child>a").on('click', function() {//has-childクラスがついたaタグをクリックしたら
+            var parentElem =  $(this).parent();// aタグから見た親要素の<li>を取得し
+            $(parentElem).toggleClass('active');//矢印方向を変えるためのクラス名を付与して
+            $(parentElem).children('ul').stop().slideToggle(500);//liの子要素のスライドを開閉させる※数字が大きくなるほどゆっくり開く
+            return false;//リンクの無効化
+            });
+        }else{//横幅が768px以上の場合
+            $(".has-child>a").off('click');//has-childクラスがついたaタグのonイベントをoff(無効)にし
+            $(".has-child").removeClass('active');//activeクラスを削除
+            $('.has-child').children('ul').css("display","");//スライドトグルで動作したdisplayも無効化にする
+        }
+        }
+
+        // ページがリサイズされたら動かしたい場合の記述
+        $(window).resize(function() {
+        mediaQueriesWin();/* ドロップダウンの関数を呼ぶ*/
+        });
+
+        // ページが読み込まれたらすぐに動かしたい場合の記述
+        $(window).on('load',function(){
+        mediaQueriesWin();/* ドロップダウンの関数を呼ぶ*/
+        });
+    </script>
+</body>
+</html>

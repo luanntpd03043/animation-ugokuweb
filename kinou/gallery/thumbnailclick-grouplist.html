@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>サムネイルをクリックするとグループ化された画像一覧を表示する</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.4/css/modaal.min.css">
+    <style>
+        /*===モーダル表示のためのcss　*/
+
+        .hide-area {
+            /*モーダル表示をする場所をあらかじめ隠す*/
+            display: none;
+        }
+
+        .modaal-fullscreen .modaal-content-container {
+            /*full画面の色設定*/
+            background: #333;
+            color: #fff;
+            text-align: center;
+        }
+
+        .modaal-fullscreen .modaal-close {
+            /*ボタンの色、位置*/
+            background: none;
+            right: 20px;
+        }
+
+        /*クローズボタンの×の色変更*/
+        .modaal-close:focus:after,
+        .modaal-close:focus:before,
+        .modaal-close:hover:after,
+        .modaal-close:hover:before {
+            background: #666;
+        }
+
+        /*キャプション*/
+        .caption {
+            display: block;
+            padding: 10px 0;
+        }
+
+        /*===　サムネイル表示のためのcss　*/
+
+        .gallery {
+            /*ベースになるギャラリーを横並びに*/
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .gallery li {
+            width: 33.333%;
+            padding: 0 10px;
+        }
+
+        /*画像の横幅を100%にしてレスポンシブ化*/
+        img {
+            max-width: 100%;
+            height: auto;
+            vertical-align: bottom;
+            margin: 0 auto;
+            /*画像の下にできる余白を削除*/
+        }
+
+        /*========= レイアウトのためのCSS ===============*/
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        a {
+            color: #333;
+        }
+
+        a:hover,
+        a:active {
+            text-decoration: none;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 6vw;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin: 30px 0;
+        }
+
+        p {
+            margin: 0 10px 10px 10px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <div class="wrapper">
+                <h1>Gallery</h1>
+                <p>画像拡大に使用したライブラリ：<a href="http://humaan.com/modaal/" target="_blank">http://humaan.com/modaal/</a></p>
+                <ul class="gallery">
+                    <li><a href="#gallery-1" class="gallery-list"><img src="img/grouplist/01.jpg" alt=""></a></li>
+                    <li><a href="#gallery-2" class="gallery-list"><img src="img/grouplist/05.jpg" alt=""></a></li>
+                    <li><a href="#gallery-3" class="gallery-list"><img src="img/grouplist/09.jpg" alt=""></a></li>
+                </ul>
+
+                <section id="gallery-1" class="hide-area">
+                    <p><img src="img/grouplist/01.jpg" alt=""><span class="caption">画像の説明</span></p>
+                    <p><img src="img/grouplist/02.jpg" alt=""><span class="caption">画像の説明</span></p>
+                    <p><img src="img/grouplist/03.jpg" alt=""><span class="caption">画像の説明</span></p>
+                    <p><img src="img/grouplist/04.jpg" alt=""><span class="caption">画像の説明</span></p>
+                </section>
+
+                <section id="gallery-2" class="hide-area">
+                    <p><img src="img/grouplist/05.jpg" alt=""><span class="caption">画像の説明</span></p>
+                    <p><img src="img/grouplist/06.jpg" alt=""><span class="caption">画像の説明</span></p>
+                    <p><img src="img/grouplist/07.jpg" alt=""><span class="caption">画像の説明</span></p>
+                    <p><img src="img/grouplist/08.jpg" alt=""><span class="caption">画像の説明</span></p>
+                </section>
+
+                <section id="gallery-3" class="hide-area">
+                    <p><img src="img/grouplist/09.jpg" alt=""><span class="caption">画像の説明</span></p>
+                    <p><img src="img/grouplist/10.jpg" alt=""><span class="caption">画像の説明</span></p>
+                    <p><img src="img/grouplist/11.jpg" alt=""><span class="caption">画像の説明</span></p>
+                    <p><img src="img/grouplist/12.jpg" alt=""><span class="caption">画像の説明</span></p>
+                </section>
+                <!--/wrapper-->
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.4/js/modaal.min.js"></script>
+    <script>
+        //画像をクリックしたら現れる画面の設定  
+        $(".gallery-list").modaal({
+            fullscreen: 'true', //フルスクリーンモードにする
+            before_open: function () {// モーダルが開く前に行う動作
+                $('html').css('overflow-y', 'hidden');/*縦スクロールバーを出さない*/
+            },
+            after_close: function () {// モーダルが閉じた後に行う動作
+                $('html').css('overflow-y', 'scroll');/*縦スクロールバーを出す*/
+            }
+        });
+    </script>
+</body>
+
+</html>

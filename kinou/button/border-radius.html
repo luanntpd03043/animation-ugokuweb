@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>角丸に変わる</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        /*角丸に変わる*/
+
+        .btnchangeradius {
+            /*ボタンの形状*/
+            display: inline-block;
+            background: #333;
+            color: #fff;
+            padding: 10px 20px;
+
+            border: 5px double white;
+            text-decoration: none;
+            outline: none;
+            /*アニメーションの指定*/
+            transition: .3s ease-out;
+        }
+
+        /*hoverした際の角丸のアニメーション*/
+        .btnchangeradius:hover {
+            background: #666;
+            border-radius: 20px;
+        }
+
+        /*========= レイアウトのためのCSS ===============*/
+
+        body {
+            vertical-align: middle;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        p {
+            margin: 0 0 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <a href="#" class="btnchangeradius">7-1-39 角丸に変わる</a>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+
+    </script>
+</body>
+
+</html>

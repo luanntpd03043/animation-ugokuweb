@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>スクロールすると1画面移動</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        /*========= レイアウトのためのCSS ===============*/
+
+        #header {
+            padding: 40px;
+            background: #666;
+            color: #fff;
+            text-align: center;
+        }
+
+        .box {
+            color: #fff;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        #box1 {
+            background: #333;
+        }
+
+        #box2 {
+            background: #666;
+        }
+
+        #box3 {
+            background: #888;
+        }
+
+        #box4 {
+            background: #000;
+        }
+
+        #footer {
+            background: #333;
+            color: #fff;
+            padding: 40px;
+            text-align: center;
+        }
+
+        #footer a {
+            color: #fff;
+        }
+
+        /*========= ページネーションCSS ===============*/
+
+        .pagination {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1em;
+            z-index: 10;
+            list-style: none;
+        }
+
+        .pagination a {
+            display: block;
+            height: 20px;
+            margin-bottom: 5px;
+            color: #fff;
+            position: relative;
+            padding: 4px;
+        }
+
+        .pagination a.active:after {
+            box-shadow: inset 0 0 0 5px;
+        }
+
+        /*現在地表示のテキストの設定*/
+        .pagination a .hover-text {
+            position: absolute;
+            right: 15px;
+            top: 0;
+            opacity: 0;
+            -webkit-transition: opacity 0.5s ease;
+            transition: opacity 0.5s ease;
+            padding-right: 15px;
+        }
+
+        .pagination a:hover .hover-text {
+            opacity: 1;
+        }
+
+        .pagination a:after {
+            -webkit-transition: box-shadow 0.5s ease;
+            transition: box-shadow 0.5s ease;
+            width: 10px;
+            height: 10px;
+            display: block;
+            border: 1px solid;
+            border-radius: 50%;
+            content: "";
+            position: absolute;
+            margin: auto;
+            top: 0;
+            right: 3px;
+            bottom: 0;
+        }
+
+        /*768px以下は現在地表示のテキストを非表示*/
+        @media screen and (max-width:768px) {
+            .pagination a .hover-text {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <header id="header">
+                <h1>Header</h1>
+            </header>
+            <main>
+                <section id="box1" class="box" data-section-name="About">
+                    <h2>About</h2>
+                    <!--/box-->
+                </section>
+
+                <section id="box2" class="box" data-section-name="Service">
+                    <h2>Service</h2>
+                    <!--/box-->
+                </section>
+
+                <section id="box3" class="box" data-section-name="Access">
+                    <h2>Access</h2>
+                    <!--/box-->
+                </section>
+
+                <section id="box4" class="box" data-section-name="Contact">
+                    <h2>Contact</h2>
+                    <!--/box-->
+                </section>
+            </main>
+            <footer id="footer">
+                <small>参照： <a href="https://projects.lukehaas.me/scrollify/" target="_blank">https://projects.lukehaas.me/scrollify/</a></small>
+            </footer>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/scrollify/1.0.21/jquery.scrollify.min.js"></script>
+    <script>
+        $.scrollify({
+            section: ".box",//1ページスクロールさせたいエリアクラス名
+            scrollbars: "false",//スクロールバー表示・非表示設定
+            interstitialSection: "#header,#footer",//ヘッダーフッターを認識し、1ページスクロールさせず表示されるように設定
+            easing: "swing", // 他にもlinearやeaseOutExpoといったjQueryのeasing指定可能
+            scrollSpeed: 300, // スクロール時の速度
+
+            //以下、ページネーション設定
+            before: function (i, panels) {
+                var ref = panels[i].attr("data-section-name");
+                $(".pagination .active").removeClass("active");
+                $(".pagination").find("a[href=\"#" + ref + "\"]").addClass("active");
+            },
+            afterRender: function () {
+                var pagination = "<ul class=\"pagination\">";
+                var activeClass = "";
+                $(".box").each(function (i) {//1ページスクロールさせたいエリアクラス名を指定
+                    activeClass = "";
+                    if (i === $.scrollify.currentIndex()) {
+                        activeClass = "active";
+                    }
+                    pagination += "<li><a class=\"" + activeClass + "\" href=\"#" + $(this).attr("data-section-name") + "\"><span class=\"hover-text\">" + $(this).attr("data-section-name").charAt(0).toUpperCase() + $(this).attr("data-section-name").slice(1) + "</span></a></li>";
+                });
+                pagination += "</ul>";
+
+                $("#box1").append(pagination);//はじめのエリアにページネーションを表示
+                $(".pagination a").on("click", $.scrollify.move);
+            }
+
+        });
+    </script>
+</body>
+
+</html>

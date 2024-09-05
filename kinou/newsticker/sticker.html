@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>粒子が集まってタイポグラフィーを形成する</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        /*==================================================
+ニュースティッカーのためのcss
+===================================*/
+        /*ニュース1行の周りの余白*/
+        .slider a {
+            display: block;
+            background: #fff;
+            padding: 20px;
+        }
+
+        /*日付*/
+        .slider span {
+            display: inline-block;
+            font-size: 0.8rem;
+            margin-right: 10px;
+            color: #777;
+        }
+
+        /*768px以下の見た目　※1行のままにしたい場合は不要*/
+        @media screen and (max-width:768px) {
+            .slider {
+                padding: 20px;
+                background: #fff;
+            }
+
+            .slider li {
+                border-bottom: 1px dashed #ccc;
+            }
+
+            .slider li:last-child {
+                border-bottom: none;
+            }
+
+            .slider span {
+                display: block;
+                padding-bottom: 10px;
+            }
+        }
+
+        /*========= レイアウトのためのCSS ===============*/
+
+        body {
+            background: #ddd;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        .wrapper {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.2rem;
+        }
+
+        a {
+            color: #333;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <h1>上下に遷移するお知らせ(bxSlider.js)</h1>
+            <p>使用したライブラリ：<a href="https://bxslider.com/" target="_blank">https://bxslider.com/</a></p>
+
+            <ul class="slider">
+                <li><a href="#"><span>2021.11.01</span>1つめのニュースの記事です。</a></li>
+                <li><a href="#"><span>2021.11.02</span>2つめのニュースの記事です。</a></li>
+                <li><a href="#"><span>2021.11.03</span>3つめのニュースの記事です。</a></li>
+            </ul>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.js"></script>
+    <script>
+        var slider;
+        var sliderFlag = false;
+        var breakpoint = 768;//768px以下の場合
+
+        function sliderSet() {
+            var windowWidth = window.innerWidth;
+            if (windowWidth >= breakpoint && !sliderFlag) {//768px以上は1行でスライダー表示
+                slider = $('.slider').bxSlider({
+                    touchEnabled: false,//リンクを有効にするためスライドをマウスでドラッグした際にスライドの切り替えを可能にする機能を無効化
+                    mode: 'vertical',//縦スライド指定
+                    controls: false,//前後のコントロールを表示させない。
+                    auto: 'true',//自動的にスライド
+                    pager: false//ページ送り無効化
+                });
+                sliderFlag = true;
+            } else if (windowWidth < breakpoint && sliderFlag) {
+                slider.destroySlider();//bxSliderのOptionであるdestroySliderを使用してスライダーの動きを除去
+                sliderFlag = false;
+            }
+        }
+
+        $(window).on('load resize', function () {
+            sliderSet();
+        });
+    </script>
+</body>
+
+</html>

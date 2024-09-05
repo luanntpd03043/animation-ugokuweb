@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>サムネイルをクリックすると、メイン画像が切り替わる2</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+    <style>
+        /*==================================================
+スライダーのためのcss
+===================================*/
+
+        /*画像の横幅を100%にしてレスポンシブ化*/
+        img {
+            width: 100%;
+            height: auto;
+            vertical-align: bottom;
+            /*画像の下にできる余白を削除*/
+        }
+
+        /*メイン画像下に余白をつける*/
+        .gallery {
+            margin: 0 0 5px 0;
+        }
+
+        /*矢印の設定*/
+
+        /*戻る、次へ矢印の位置*/
+        .slick-prev,
+        .slick-next {
+            position: absolute;
+            /*絶対配置にする*/
+            z-index: 3;
+            top: 42%;
+            cursor: pointer;
+            /*マウスカーソルを指マークに*/
+            outline: none;
+            /*クリックをしたら出てくる枠線を消す*/
+            border-top: 2px solid #ccc;
+            /*矢印の色*/
+            border-right: 2px solid #ccc;
+            /*矢印の色*/
+            height: 25px;
+            width: 25px;
+        }
+
+        .slick-prev {
+            /*戻る矢印の位置と形状*/
+            left: 2.5%;
+            transform: rotate(-135deg);
+        }
+
+        .slick-next {
+            /*次へ矢印の位置と形状*/
+            right: 2.5%;
+            transform: rotate(45deg);
+        }
+
+        /*選択するサムネイル画像の設定*/
+
+        .choice-btn li {
+            cursor: pointer;
+            outline: none;
+            background: #333;
+        }
+
+        .choice-btn li img {
+            opacity: 0.4;
+            /*選択されていないものは透過40%*/
+        }
+
+        .choice-btn li.slick-current img {
+            opacity: 1;
+            /*選択されているものは透過しない*/
+        }
+
+        /*========= レイアウトのためのCSS ===============*/
+        /*エリア全体を中央寄せ*/
+        .wrapper {
+            width: 94%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        a {
+            color: #333;
+        }
+
+        a:hover,
+        a:active {
+            text-decoration: none;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 6vw;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin: 30px 0;
+        }
+
+        p {
+            margin: 30px 0;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <div class="wrapper">
+                <h1>Gallery</h1>
+                <p>使用したライブラリ：<a href="https://kenwheeler.github.io/slick/" target="_blank">https://kenwheeler.github.io/slick/</a></p>
+                <ul class="gallery">
+                    <li><img src="img/thumbnail02/01.jpg" alt=""></li>
+                    <li><img src="img/thumbnail02/02.jpg" alt=""></li>
+                    <li><img src="img/thumbnail02/03.jpg" alt=""></li>
+                    <li><img src="img/thumbnail02/04.jpg" alt=""></li>
+                    <li><img src="img/thumbnail02/05.jpg" alt=""></li>
+                    <li><img src="img/thumbnail02/06.jpg" alt=""></li>
+                    <li><img src="img/thumbnail02/07.jpg" alt=""></li>
+                    <li><img src="img/thumbnail02/08.jpg" alt=""></li>
+                </ul>
+                <ul class="choice-btn">
+                    <li><img src="img/thumbnail02/01.jpg" alt=""></li>
+                    <li><img src="img/thumbnail02/02.jpg" alt=""></li>
+                    <li><img src="img/thumbnail02/03.jpg" alt=""></li>
+                    <li><img src="img/thumbnail02/04.jpg" alt=""></li>
+                    <li><img src="img/thumbnail02/05.jpg" alt=""></li>
+                    <li><img src="img/thumbnail02/06.jpg" alt=""></li>
+                    <li><img src="img/thumbnail02/07.jpg" alt=""></li>
+                    <li><img src="img/thumbnail02/08.jpg" alt=""></li>
+                </ul>
+                <!--/wrapper-->
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script>
+        //上部画像の設定
+        $('.gallery').slick({
+            infinite: true, //スライドをループさせるかどうか。初期値はtrue。
+            fade: true, //フェードの有効化
+            arrows: true,//左右の矢印あり
+            prevArrow: '<div class="slick-prev"></div>',//矢印部分PreviewのHTMLを変更
+            nextArrow: '<div class="slick-next"></div>',//矢印部分NextのHTMLを変更
+            asNavFor: '.choice-btn', //連動させるサムネイルのクラス名
+        });
+
+        //選択画像の設定
+        $('.choice-btn').slick({
+            infinite: true, //スライドをループさせるかどうか。初期値はtrue。
+            slidesToShow: 4, //表示させるスライドの数
+            focusOnSelect: true, //フォーカスの有効化
+            prevArrow: '<div class="slick-prev"></div>',//矢印部分PreviewのHTMLを変更
+            nextArrow: '<div class="slick-next"></div>',//矢印部分NextのHTMLを変更
+            asNavFor: '.gallery', //連動させるスライドショーのクラス名
+        });
+    </script>
+</body>
+
+</html>

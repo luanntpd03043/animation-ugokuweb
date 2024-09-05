@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>画像が拡大</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        /*　画像の縮小　*/
+        .zoomOut img {
+            transform: scale(1.1);
+            transition: .3s ease-in-out;
+            /*移り変わる速さを変更したい場合はこの数値を変更*/
+        }
+
+        .zoomOut a:hover img {
+            /*hoverした時の変化*/
+            transform: scale(1);
+            /*拡大の値を変更したい場合はこの数値を変更*/
+        }
+
+
+        /*　画像のマスク　*/
+
+        .mask {
+            display: block;
+            line-height: 0;
+            /*行の高さを0にする*/
+            overflow: hidden;
+            /*拡大してはみ出る要素を隠す*/
+        }
+
+
+        /*========= レイアウトのためのCSS ===============*/
+
+        a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .lead {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        /*画像のレスポンシブ*/
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+
+        /*　横幅　*/
+
+        .zoomOut {
+            width: 70%;
+            margin: 0 auto;
+            /*中央揃え*/
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <h1 class="title">画像が拡大</h1>
+        <div id="content">
+            <div class="zoomOut"><a href="#"><span class="mask"><img src="img/02.jpg" alt=""></span></a></div>
+        </div>
+    </div>
+</body>
+
+</html>

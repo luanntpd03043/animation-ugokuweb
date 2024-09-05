@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>タイピング風に出現</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        /*========= レイアウトのためのCSS ===============*/
+        p {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.5rem;
+            letter-spacing: .5em;
+            word-break: break-all;
+        }
+
+        .TextTyping {
+            text-align: center;
+        }
+
+        /*========= タイピング ===============*/
+
+        .TextTyping span {
+            display: none;
+        }
+
+        /*文字列後ろの線の設定*/
+        .TextTyping::after {
+            content: "|";
+            animation: typinganime .8s ease infinite;
+        }
+
+        @keyframes typinganime {
+            from {
+                opacity: 0
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <h1 class="title">タイピング風に出現</h1>
+        <div id="content">
+            <p class="TextTyping">ABCDEFGHIJKLMN</p>
+
+            <p><br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓
+            </p>
+
+            <p class="TextTyping">ABCDEFGHIJKLMN</p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        // TextTypingというクラス名がついている子要素（span）を表示から非表示にする定義
+        function TextTypingAnime() {
+            $('.TextTyping').each(function () {
+                var elemPos = $(this).offset().top - 50;
+                var scroll = $(window).scrollTop();
+                var windowHeight = $(window).height();
+                var thisChild = "";
+                if (scroll >= elemPos - windowHeight) {
+                    thisChild = $(this).children(); //spanタグを取得
+                    //spanタグの要素の１つ１つ処理を追加
+                    thisChild.each(function (i) {
+                        var time = 100;
+                        //時差で表示する為にdelayを指定しその時間後にfadeInで表示させる
+                        $(this).delay(time * i).fadeIn(time);
+                    });
+                } else {
+                    thisChild = $(this).children();
+                    thisChild.each(function () {
+                        $(this).stop(); //delay処理を止める
+                        $(this).css("display", "none"); //spanタグ非表示
+                    });
+                }
+            });
+        }
+        // 画面をスクロールをしたら動かしたい場合の記述
+        $(window).scroll(function () {
+            TextTypingAnime();/* アニメーション用の関数を呼ぶ*/
+        });// ここまで画面をスクロールをしたら動かしたい場合の記述
+
+        // 画面が読み込まれたらすぐに動かしたい場合の記述
+        $(window).on('load', function () {
+            //spanタグを追加する
+            var element = $(".TextTyping");
+            element.each(function () {
+                var text = $(this).html();
+                var textbox = "";
+                text.split('').forEach(function (t) {
+                    if (t !== " ") {
+                        textbox += '<span>' + t + '</span>';
+                    } else {
+                        textbox += t;
+                    }
+                });
+                $(this).html(textbox);
+
+            });
+
+            TextTypingAnime();/* アニメーション用の関数を呼ぶ*/
+        });// ここまで画面が読み込まれたらすぐに動かしたい場合の記述
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>背景が出現＋テキスト（中央から縦に）</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        /* 背景が中央から縦に出現＋テキスト */
+
+        .bgCH {
+            position: relative;
+            /*テキストの基点となる位置を定義*/
+        }
+
+        .bgCH span.mask {
+            position: relative;
+            /*背景色の基点となる位置を定義*/
+            display: block;
+            /*画像をくくるspanタグをブロック要素にする*/
+            line-height: 0;
+            /*行の高さを0にする*/
+            overflow: hidden;
+            /*高さからはみ出ているものを隠す*/
+        }
+
+        .bgCH span.mask::before {
+            content: "";
+            position: absolute;
+            z-index: 2;
+            left: 0;
+            top: 0;
+            transition: transform .3s cubic-bezier(0.8, 0, 0.2, 1) 0s;
+            /*移り変わる速さを変更したい場合はこの数値を変更*/
+            transform: scale(1, 0);
+            transform-origin: center;
+            background: #333;
+            /*背景色*/
+            width: 100%;
+            height: 100%;
+        }
+
+        .bgCH span.mask:hover::before {
+            /*hoverした時の変化*/
+            transform: scale(1, 1)
+        }
+
+        .bgCH span.cap {
+            position: absolute;
+            opacity: 0;
+            transition: .5s ease-in-out;
+            /*移り変わる速さを変更したい場合はこの数値を変更*/
+            z-index: 3;
+            /*テキストを前面に出す*/
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            /*テキストの色を変えたい場合はここを修正*/
+            line-height: 1.5;
+            /*行の高さを1.5にする*/
+        }
+
+        .bgCH a:hover span.cap {
+            /*hoverした時の変化*/
+            opacity: 1;
+        }
+
+
+
+        /*========= レイアウトのためのCSS ===============*/
+
+        a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .lead {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        /*画像のレスポンシブ*/
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* 横幅 */
+
+        .bgCH {
+            width: 70%;
+            margin: 0 auto;
+            /*中央揃え*/
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <h1 class="title">背景が出現＋テキスト（中央から縦に）</h1>
+        <div id="content">
+            <div class="bgCH"><a href="#"><span class="mask"><img src="img/01.jpg" alt=""><span class="cap">背景が中央から縦に出現＋テキスト bgCH</span></span></a></div>
+        </div>
+    </div>
+</body>
+
+</html>

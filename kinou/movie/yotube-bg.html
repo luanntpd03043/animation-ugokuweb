@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YouTubeを使って、画面全体に背景動画を流す</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        /*========= 背景動画設定のCSS ===============*/
+
+        /*header設定*/
+        #header {
+            position: relative;
+            /*ローディング画像などを表示す際の基点とするため指定*/
+            height: 100vh;
+            /*高さを全画面にあわせる*/
+            text-align: center;
+            color: #fff;
+            /*ローディング画面時＆動画が表示されないときに表示する背景画像のレスポンシブ化*/
+            background: url("../img/movie.jpg") no-repeat;
+            background-size: cover;
+        }
+
+        /* ローディングアイコン設定 */
+
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+        }
+
+        /*jQueryで付与されたdisappearクラスがついたらロゴエリアを非表示*/
+
+        #loading.disappear {
+            display: none;
+        }
+
+
+        /* youtube設定 */
+
+        #youtube-area {
+            position: fixed;
+            z-index: 1;
+            /*最背面に設定*/
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+
+        /*jQueryで付与されたappearクラスがついたらYoutubeエリアをふわっと表示*/
+        #youtube-area.appear {
+            animation-name: PageAnimeAppear;
+            animation-duration: .5s;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes PageAnimeAppear {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        #youtube {
+            /*天地中央配置*/
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /*縦横幅指定*/
+            width: 177.77777778vh;
+            /* 16:9 の幅→16 ÷ 9＝ 177.77% */
+            height: 56.25vw;
+            /* 16:9の幅 → 9 ÷ 16 = 56.25% */
+            min-height: 100%;
+            min-width: 100%;
+        }
+
+        /*youtubeがクリックされないためのマスク*/
+        #youtube-mask {
+            position: absolute;
+            z-index: 2;
+            /*下から2番目に表示*/
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+
+        /*youtube 上のロゴ */
+        h1 {
+            position: absolute;
+            z-index: 2;
+            /*下から2番目に表示*/
+            /*天地中央配置*/
+            top: 50%;
+            left: 50%;
+            transform: translateY(-50%) translateX(-50%);
+            /*色指定*/
+            color: #fff;
+            text-shadow: 0 0 15px #666;
+            font-size: 20px;
+        }
+
+        /*下のコンテンツ*/
+        #container {
+            position: relative;
+            /*relativeを指定してfixed指定をした#youtube-areaの上に表示*/
+            z-index: 3;
+            /*一番上に表示*/
+            /*見た目の調整*/
+            background: #333;
+            color: #fff;
+            padding: 300px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <header id="header">
+                <div id="loading">Loading...</div>
+                <div id="youtube-area">
+                    <h1>Title</h1>
+                    <div id="youtube"></div><!--youtube表示エリア-->
+                    <div id="youtube-mask"></div><!--youtubeマスクエリア-->
+                </div>
+            </header>
+
+            <div id="container">
+                <p>ここにコンテンツが入ります</p>
+                <!--/container-->
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        //ローディング画面
+        $(window).on('load', function () {
+            $("#youtube-area").addClass('appear');
+            $("#loading").addClass('disappear');
+        });
+        //youtube API
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        var ytPlayer;
+        function onYouTubeIframeAPIReady() {
+            ytPlayer = new YT.Player('youtube', {//動画を表示させたいIDを指定
+                videoId: 'Kq95zgCrxeY',//動画のアドレスの指定
+                playerVars: {
+                    playsinline: 1,// インライン再生を行う
+                    autoplay: 1,//自動再生を行う
+                    fs: 0,//全画面表示ボタンを表示しない    
+                    rel: 0,// 再生中の動画と同じチャンネルの関連動画を表示
+                    controls: 0,// プレーヤー コントロールを表示しない
+                    modestbranding: 1, // YouTubeロゴの非表示
+                    iv_load_policy: 3, // アノテーションの非表示
+                    start: 50,//50秒後から動画がスタート
+                },
+                events: {//　イベント
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        //ミュートにしてから再生する設定
+        function onPlayerReady(event) {
+            event.target.mute();
+            event.target.playVideo();
+        }
+
+
+        //ループ設定
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.ENDED) {
+                event.target.playVideo();
+            }
+        }
+    </script>
+</body>
+
+</html>

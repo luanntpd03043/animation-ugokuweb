@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2つの画像の動きを対比させて見せる</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+    <style>
+        /*==================================================
+スライダーのためのcss
+===================================*/
+        .slider {
+            position: relative;
+            z-index: 1;
+            /*↑z-indexの値をh1のz-indexの値よりも小さくして背景に回す*/
+            height: 100vh;
+            /*スライダー全体の縦幅を画面の高さいっぱい（100vh）にする*/
+        }
+
+        .slider-top,
+        .slider-bottom {
+            height: 50vh;
+            /*スライダー上下の縦幅を画面の高さの半分（50vh）にする*/
+        }
+
+        /*　背景画像設定　*/
+
+        .slider-item01 {
+            background: url(img/comparison/img_01.jpg);
+        }
+
+        .slider-item02 {
+            background: url(img/comparison/img_02.jpg);
+        }
+
+        .slider-item03 {
+            background: url(img/comparison/img_03.jpg);
+        }
+
+        .slider-item04 {
+            background: url(img/comparison/img_04.jpg);
+        }
+
+        .slider-item05 {
+            background: url(img/comparison/img_05.jpg);
+        }
+
+        .slider-item06 {
+            background: url(img/comparison/img_06.jpg);
+        }
+
+        .slider-item {
+            width: 100%;
+            /*各スライダー全体の横幅を画面の高さいっぱい（100%）にする*/
+            height: 50vh;
+            /*各スライダーの縦幅を画面の高さの半分（50vh）にする*/
+            background-repeat: no-repeat;
+            /*背景画像をリピートしない*/
+            background-position: center;
+            /*背景画像の位置を中央に*/
+            background-size: cover;
+            /*背景画像が.slider-item全体を覆い表示*/
+        }
+
+
+        /*========= レイアウトのためのCSS ===============*/
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        a {
+            color: #fff;
+        }
+
+        a:hover,
+        a:active {
+            text-decoration: none;
+        }
+
+        h1 {
+            position: absolute;
+            z-index: 2;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 6vw;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .container {
+            background: #555;
+        }
+
+        .container p {
+            padding: 300px 0;
+            text-align: center;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <div class="wrapper">
+
+                <div class="slider">
+                    <h1>Slide show</h1>
+                    <ul class="slider-top">
+                        <li class="slider-item slider-item01"></li>
+                        <li class="slider-item slider-item02"></li>
+                        <li class="slider-item slider-item03"></li>
+                    </ul>
+                    <ul class="slider-bottom" dir="rtl"><!--/スライダの表示方向を左⇒右に変更するためにdir="rtl"を追加-->
+                        <li class="slider-item slider-item04"></li>
+                        <li class="slider-item slider-item05"></li>
+                        <li class="slider-item slider-item06"></li>
+                    </ul>
+                    <!--/slider-->
+                </div>
+
+
+                <div class="container">
+                    <p>ここから次のコンテンツスタート<br>使用したライブラリ：<a href="https://kenwheeler.github.io/slick/" target="_blank">https://kenwheeler.github.io/slick/</a></p>
+                </div>
+
+                <!--/wrapper-->
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script>
+        //スライド上の設定
+        $('.slider-top').slick({
+            accessibility: false,// 左右矢印ボタンでの切り替えなし
+            arrows: false,//左右矢印ボタン表示なし
+            autoplay: true,//自動的に動き出すか。初期値はfalse。
+            pauseOnHover: false,//オンマウスでスライドを一時停止させるかどうか。初期値はtrue。
+            pauseOnFocus: false,//フォーカスした際にスライドを一時停止させるかどうか。初期値はtrue。
+            slidesToShow: 1,//スライドを画面に1枚見せる
+            slidesToScroll: 1,//1回のスクロールで1枚の写真を移動して見せる
+            swipe: false,//タッチスワイプに対応しない
+        });
+        //スライド下の設定
+        $('.slider-bottom').slick({
+            accessibility: false,// 左右矢印ボタンでの切り替えなし
+            arrows: false,//左右矢印ボタン表示なし
+            autoplay: true,//自動的に動き出すか。初期値はfalse。
+            pauseOnHover: false,//オンマウスでスライドを一時停止させるかどうか。初期値はtrue。
+            pauseOnFocus: false,//フォーカスした際にスライドを一時停止させるかどうか。初期値はtrue。
+            slidesToShow: 1,//スライドを画面に1枚見せる
+            slidesToScroll: 1,//1回のスクロールで1枚の写真を移動して見せる
+            swipe: false,//タッチスワイプに対応しない
+            rtl: true,//スライダの表示方向を左⇒右に変更する
+        });
+    </script>
+</body>
+
+</html>

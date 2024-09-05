@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>最低限覚えておきたい現れ方 - ふわっ</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        @charset "utf-8";
+        /*==================================================
+        ふわっ
+        ===================================*/
+
+        /* その場で */
+        .fadeIn{
+        animation-name:fadeInAnime;
+        animation-duration:1s;
+        animation-fill-mode:forwards;
+        opacity:0;
+        }
+
+        @keyframes fadeInAnime{
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+        }
+
+        /* 下から */
+
+        .fadeUp{
+        animation-name:fadeUpAnime;
+        animation-duration:0.5s;
+        animation-fill-mode:forwards;
+        opacity:0;
+        }
+
+        @keyframes fadeUpAnime{
+        from {
+            opacity: 0;
+        transform: translateY(100px);
+        }
+
+        to {
+            opacity: 1;
+        transform: translateY(0);
+        }
+        }
+
+        /* 上から */
+
+        .fadeDown{
+        animation-name:fadeDownAnime;
+        animation-duration:0.5s;
+        animation-fill-mode:forwards;
+        opacity:0;
+        }
+
+        @keyframes fadeDownAnime{
+        from {
+            opacity: 0;
+        transform: translateY(-100px);
+        }
+
+        to {
+            opacity: 1;
+        transform: translateY(0);
+        }
+        }
+
+        /* 左から */
+
+        .fadeLeft{
+        animation-name:fadeLeftAnime;
+        animation-duration:0.5s;
+        animation-fill-mode:forwards;
+        opacity:0;
+        }
+
+        @keyframes fadeLeftAnime{
+        from {
+            opacity: 0;
+        transform: translateX(-100px);
+        }
+
+        to {
+            opacity: 1;
+        transform: translateX(0);
+        }
+        }
+
+        /* 右から */
+
+        .fadeRight{
+        animation-name:fadeRightAnime;
+        animation-duration:0.5s;
+        animation-fill-mode:forwards;
+        opacity:0;
+        }
+
+        @keyframes fadeRightAnime{
+        from {
+            opacity: 0;
+        transform: translateX(100px);
+        }
+
+        to {
+            opacity: 1;
+        transform: translateX(0);
+        }
+        }
+
+        /*========= レイアウトのためのCSS ===============*/
+
+        p{
+        margin:50px 0;
+        }
+
+        .flex{
+        display:flex;
+        flex-wrap: wrap;
+        }
+
+        .box{
+        width: 220px;
+        padding: 20px;
+        margin:0 20px 20px 20px;
+        background: #666;
+        color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <h1 class="title">最低限覚えておきたい現れ方 - ふわっ</h1>
+        <div id="content">
+            <!--ふわっ-->
+            <div class="flex">
+                <div class="box fadeIn">ふわっ（その場で）</div>
+                <div class="box fadeUp">ふわっ（下から）</div>
+                <div class="box fadeDown">ふわっ（上から）</div>
+                <div class="box fadeLeft">ふわっ（左から）</div>
+                <div class="box fadeRight">ふわっ（右から）</div>
+              </div>  
+        </div>
+    </div>
+</body>
+</html>

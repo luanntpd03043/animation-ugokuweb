@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>流れるように出現（左から右）</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+      /*========= レイアウトのためのCSS ===============*/
+      p {
+        text-align: center;
+        padding: 50px 0;
+        font-size: 20px;
+        letter-spacing: 0.2em;
+      }
+
+      /*==================================================
+        ランダムにテキスト出現する
+        ===================================*/
+      .TextRandomAnime span {
+        opacity: 0;
+      }
+      .TextRandomAnime.appearRandomtext span {
+        animation: text_randomanime_on 0.5s ease-out forwards;
+      }
+
+      @keyframes text_randomanime_on {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      .TextRandomAnime.appearRandomtext span:nth-child(2n) {
+        animation-delay: 0.5s; /* spanのついた2の倍数の文字列の変化を0.5秒遅らせる*/
+      }
+      .TextRandomAnime.appearRandomtext span:nth-child(3n + 1) {
+        animation-delay: 0.15s; /* spanのついた3の倍数＋1の文字列の変化を0.15秒遅らせる*/
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <h1 class="title">流れるように出現（左から右）</h1>
+      <div id="content">
+        <p class="TextRandomAnime js-sliptTxt">
+          テキストがバラバラに出現しますテキストがバラバラに出現しますテキストがバラバラに出現します
+        </p>
+        <p>
+          <br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓<br />↓
+        </p>
+        <p class="TextRandomAnime js-sliptTxt">
+          スクロール後、テキストがバラバラに出現しますテキストがバラバラに出現しますテキストがバラバラに出現します
+        </p>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+      // TextRandomAnimeにappearRandomtextというクラス名を付ける定義
+      function TextRandomAnimeControl() {
+        $(".TextRandomAnime").each(function () {
+          var elemPos = $(this).offset().top - 50;
+          var scroll = $(window).scrollTop();
+          var windowHeight = $(window).height();
+          if (scroll >= elemPos - windowHeight) {
+            $(this).addClass("appearRandomtext");
+          } else {
+            $(this).removeClass("appearRandomtext");
+          }
+        });
+      }
+
+      // 画面をスクロールをしたら動かしたい場合の記述
+      $(window).scroll(function () {
+        TextRandomAnimeControl(); /* アニメーション用の関数を呼ぶ*/
+      }); // ここまで画面をスクロールをしたら動かしたい場合の記述
+
+      // 画面が読み込まれたらすぐに動かしたい場合の記述
+      $(window).on("load", function () {
+        //spanタグを追加する
+        var element = $(".js-sliptTxt");
+        element.each(function () {
+          var text = $(this).text();
+          var textbox = "";
+          text.split("").forEach(function (t) {
+            textbox += "<span>" + t + "</span>";
+          });
+          $(this).html(textbox);
+        });
+
+        TextRandomAnimeControl(); /* アニメーション用の関数を呼ぶ*/
+      }); // ここまで画面が読み込まれたらすぐに動かしたい場合の記述
+    </script>
+  </body>
+</html>

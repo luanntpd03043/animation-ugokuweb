@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>押し込まれる（円が縮小）</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        /*== 押し込む円 */
+
+        .pushcircle {
+            /*周囲の線の起点とするためrelativeを指定*/
+            position: relative;
+            /*円の形状*/
+            width: 100px;
+            height: 100px;
+            box-sizing: border-box;
+            padding: 0 10px;
+            text-align: center;
+            background: #333;
+            border-radius: 50%;
+            color: #fff;
+            text-decoration: none;
+            outline: none;
+            /*天地中央にテキストを配置*/
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        /*内側の線*/
+        .pushcircle:after {
+            content: "";
+            /*絶対配置で線の位置を決める*/
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            /*線の形状*/
+            width: 85%;
+            height: 85%;
+            border: 2px solid #333;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(1.1);
+            /*アニメーションの指定*/
+            transition: .3s ease;
+        }
+
+        /*hoverをしたら枠線が小さくなる*/
+        .pushcircle:hover:after {
+            transform: translate(-50%, -50%) scale(1);
+            border-color: #fff;
+        }
+
+        /*========= レイアウトのためのCSS ===============*/
+
+        body {
+            vertical-align: middle;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        p {
+            margin: 0 0 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <p>7-1-14 押し込まれる（円が縮小）</p>
+            <a href="#" class="pushcircle">7-1-14</a>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+
+    </script>
+</body>
+
+</html>

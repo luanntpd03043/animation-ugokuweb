@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>背景が出現＋テキスト（中央から縦に）</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        /* 回転Y軸
+   ----------------------------- */
+
+        .flipY a {
+            /*テキストの基点となる位置を定義*/
+            position: relative;
+            display: block;
+        }
+
+        .flipY img {
+            transition: all 0.35s ease;
+            /*移り変わる速さを変更したい場合はこの数値を変更*/
+            backface-visibility: hidden;
+            /*三次元になった際に裏面を可視化させない*/
+        }
+
+        .flipY a:hover img {
+            /*hoverした時の変化*/
+            transform: rotateY(-180deg);
+            opacity: 0;
+        }
+
+        .flipY span.cap {
+            /*ここからエリアの絶対配置の指定*/
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            /*ここまでエリアの絶対配置の指定*/
+            transition: all 0.35s ease;
+            /*移り変わる速さを変更したい場合はこの数値を変更*/
+            transform: rotateY(90deg);
+            /*横軸に回転*/
+            transform-origin: 50% 0%;
+            /*回転する基点*/
+            opacity: 0;
+            background: #333;
+            /*背景色*/
+            color: #fff;
+            /*テキストの色を変えたい場合はここを修正*/
+            /*ここからテキスト中央寄せの指定*/
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /*ここまでテキスト中央寄せの指定*/
+        }
+
+        .flipY a:hover span.cap {
+            /*hoverした時の変化*/
+            transform: rotateY(0);
+            /*横軸に回転*/
+            opacity: 1;
+            transition-delay: 0.15s;
+            /*移り変わる速さを変更したい場合はこの数値を変更*/
+        }
+
+        /*========= レイアウトのためのCSS ===============*/
+
+        a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .lead {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        /*画像のレスポンシブ*/
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+
+
+        /*横幅*/
+
+        .flipY {
+            width: 70%;
+            margin: 0 auto;
+            /*中央揃え*/
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <h1 class="title">背景が出現＋テキスト（中央から縦に）</h1>
+        <div id="content">
+            <div class="flipY"><a href="#"><img src="img/03.jpg" alt=""><span class="cap">回転Y軸＋テキストが出現 flipY</span></a></div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>最低限覚えておきたい現れ方 - にゅーん</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        @charset "utf-8";
+
+        /*==================================================
+        にゅーん
+        ===================================*/
+
+        /* 滑らかに変形して出現 */
+        .smooth{
+        animation-name:smoothAnime;
+        animation-duration:1s;
+        animation-fill-mode:forwards;
+            transform-origin:left;
+        opacity:0;
+        }
+
+        @keyframes smoothAnime{
+        from {
+        transform:translate3d(0, 100%, 0) skewY(12deg);
+        opacity:0;
+        }
+
+        to {
+        transform:translate3d(0, 0, 0) skewY(0);
+        opacity:1;
+        }
+        }
+
+        /*========= レイアウトのためのCSS ===============*/
+        p{
+        margin:50px 0;
+        }
+
+        .box{
+        width: 220px;
+        padding: 20px;
+        background: #666;
+        color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <h1 class="title">最低限覚えておきたい現れ方 - にゅーん</h1>
+        <div id="content">
+            <!--にゅーん-->
+            <div class="box smooth">滑らかに変形して出現</div>  
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>最低限覚えておきたい現れ方 - くるっ</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        @charset "utf-8";
+
+        /*==================================================
+        くるっ
+        ===================================*/
+
+        /* X 軸（縦へ） */
+        .rotateX{
+        animation-name:rotateXAnime;
+        animation-duration:1s;
+        animation-fill-mode:forwards;
+        }
+
+        @keyframes rotateXAnime{
+        from{
+            transform: rotateX(0);
+            }
+        to{
+            transform: rotateX(-360deg);
+            }
+        }
+
+        /* 　Y 軸（横へ） */
+        .rotateY{
+        animation-name:rotateYAnime;
+        animation-duration:1s;
+        animation-fill-mode:forwards;
+        }
+
+        @keyframes rotateYAnime{
+        from{
+            transform: rotateY(0);
+            }
+        to{
+            transform: rotateY(-360deg);
+            }
+        }
+
+        /* Z 軸（左へ） */
+        .rotateLeftZ{
+        animation-name:rotateLeftZAnime;
+        animation-duration:1s;
+        animation-fill-mode:forwards;
+        }
+
+        @keyframes rotateLeftZAnime{
+        from{
+            transform: rotateZ(0);
+            }
+        to{
+            transform: rotateZ(-360deg);
+            }
+        }
+
+        /* Z 軸（右へ） */
+        .rotateRightZ{
+        animation-name:rotateRightZAnime;
+        animation-duration:1s;
+        animation-fill-mode:forwards;
+        }
+
+        @keyframes rotateRightZAnime{
+        from{
+            transform: rotateZ(0);
+            }
+        to{
+            transform: rotateZ(360deg);
+            }
+        }
+
+        /*========= レイアウトのためのCSS ===============*/
+        p{
+        margin:50px 0;
+        }
+
+        .flex{
+        display:flex;
+        flex-wrap: wrap;
+        }
+
+        .box{
+        width: 220px;
+        padding: 20px;
+            margin:0 20px 20px 20px;
+        background: #666;
+        color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <h1 class="title">最低限覚えておきたい現れ方 - くるっ</h1>
+        <div id="content">
+            <!--くるっ-->
+            <div class="flex">
+                <div class="box rotateX">くるっX軸（縦へ）</div>
+                <div class="box rotateY">くるっY軸（横へ）</div>
+                <div class="box rotateLeftZ">くるっZ軸（左へ）</div>
+                <div class="box rotateRightZ">くるっZ軸（右へ）</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数字のカウントアップ・ダウン</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        /*========= レイアウトのためのCSS ===============*/
+
+        body {
+            background: #ECF2FC;
+        }
+
+        h1 {
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 30px;
+            font-weight: bold;
+            margin: 30px 0;
+        }
+
+        .lead {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .box {
+            max-width: 500px;
+            width: 100%;
+            margin: 130px auto;
+            padding: 20px;
+            background: #fff;
+            text-align: center;
+        }
+
+        .count-size {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #252C8C;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <h1>Count Up Down</h1>
+            <p class="lead">使用したライブラリ：<br>・カウントアップダウン<br><a href="https://github.com/LadyBiosphere/animated-counter" target="_blank">https://github.com/LadyBiosphere/animated-counter</a><br>・画面に入ったらカウントアップ・ダウンをスタートするきっかけ<br><a href="https://github.com/protonet/jquery.inview" target="_blank">https://github.com/protonet/jquery.inview</a></p>
+
+            <div id="box1" class="box">
+                <p>男性の学生数<br><span class="count-up count-size">2540</span>人</p>
+                <p>女性の学生数<br><span class="count-up count-size">2300</span>人</p>
+                <!--/box-->
+            </div>
+
+
+            <div id="box2" class="box">
+                <p>学食充実満足度全国<br>第<span class="count-down count-size">1</span>位</p>
+                <!--/box-->
+            </div>
+
+
+            <div id="box3" class="box">
+                <p>文系<br><span class="count-up count-size">40</span>%</p>
+                <p>理系<br><span class="count-up count-size">60</span>%</p>
+                <!--/box-->
+            </div>
+
+            <div id="box4" class="box">
+                <p>年間の休日<br><span class="count-up count-size">156</span>日</p>
+                <!--/box-->
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/protonet-jquery.inview/1.1.2/jquery.inview.min.js"></script>
+    <script>
+        // https://github.com/LadyBiosphere/animated-counterの改変
+        $('#box1').on('inview', function (event, isInView) {
+            if (isInView) {
+                //要素が見えたときに実行する処理
+                $("#box1 .count-up").each(function () {
+                    $(this).prop('Counter', 0).animate({//0からカウントアップ
+                        Counter: $(this).text()
+                    }, {
+                        // スピードやアニメーションの設定
+                        duration: 2000,//数字が大きいほど変化のスピードが遅くなる。2000=2秒
+                        easing: 'swing',//動きの種類。他にもlinearなど設定可能
+                        step: function (now) {
+                            $(this).text(Math.ceil(now));
+                        }
+                    });
+                });
+            }
+        });
+
+        $('#box2').on('inview', function (event, isInView) {
+            if (isInView) {
+                //要素が見えたときに実行する処理
+                $("#box2 .count-down").each(function () {
+                    $(this).prop('Counter', 10).animate({//10からカウントダウン
+                        Counter: $(this).text()
+                    }, {
+                        // スピードやアニメーションの設定
+                        duration: 1000,//数字が大きいほど変化のスピードが遅くなる。1000=1秒
+                        easing: 'swing',//動きの種類。他にもlinearなど設定可能
+                        step: function (now) {
+                            $(this).text(Math.ceil(now));
+                        }
+                    });
+                });
+            }
+        });
+
+        $('#box3').on('inview', function (event, isInView) {
+            if (isInView) {
+                //要素が見えたときに実行する処理
+                $("#box3 .count-up").each(function () {
+                    $(this).prop('Counter', 0).animate({//0からカウントアップ
+                        Counter: $(this).text()
+                    }, {
+                        // スピードやアニメーションの設定
+                        duration: 2000,//数字が大きいほど変化のスピードが遅くなる。2000=2秒
+                        easing: 'swing',//動きの種類。他にもlinearなど設定可能
+                        step: function (now) {
+                            $(this).text(Math.ceil(now));
+                        }
+                    });
+                });
+            }
+        });
+
+        $('#box4').on('inview', function (event, isInView) {
+            if (isInView) {
+                //要素が見えたときに実行する処理
+                $("#box4 .count-up").each(function () {
+                    $(this).prop('Counter', 0).animate({//0からカウントアップ
+                        Counter: $(this).text()
+                    }, {
+                        // スピードやアニメーションの設定
+                        duration: 2000,//数字が大きいほど変化のスピードが遅くなる。2000=2秒
+                        easing: 'swing',//動きの種類。他にもlinearなど設定可能
+                        step: function (now) {
+                            $(this).text(Math.ceil(now));
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

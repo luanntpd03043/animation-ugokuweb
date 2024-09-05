@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>矢印が右に移動して背景がつく</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        /*矢印が右に移動して背景がつく*/
+
+        .btnarrow5 {
+            /*矢印の基点とするためrelativeを指定*/
+            position: relative;
+            /*ボタンの形状*/
+            border: 1px solid #555;
+            padding: 8px 30px;
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+            color: #333;
+            outline: none;
+            /*アニメーションの指定*/
+            transition: all .2s linear;
+        }
+
+        .btnarrow5:hover {
+            background: #333;
+            color: #fff;
+        }
+
+        /*矢印と下線の形状*/
+        .btnarrow5::before {
+            content: "";
+            /*絶対配置で下線の位置を決める*/
+            position: absolute;
+            top: 50%;
+            right: -26px;
+            /*下線の形状*/
+            width: 40px;
+            height: 1px;
+            background: #333;
+            /*アニメーションの指定*/
+            transition: all .2s linear;
+        }
+
+        .btnarrow5::after {
+            content: "";
+            /*絶対配置で矢印の位置を決める*/
+            position: absolute;
+            top: 24%;
+            right: -20px;
+            /*矢印の形状*/
+            width: 1px;
+            height: 12px;
+            background: #333;
+            transform: skewX(45deg);
+            /*アニメーションの指定*/
+            transition: all .2s linear;
+        }
+
+        /*hoverした際の移動*/
+        .btnarrow5:hover::before {
+            right: -30px;
+        }
+
+        .btnarrow5:hover::after {
+            right: -25px;
+        }
+
+
+        /*========= レイアウトのためのCSS ===============*/
+
+        body {
+            vertical-align: middle;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        p {
+            margin: 0 0 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <a href="#" class="btnarrow5">7-1-47 矢印が右に移動して背景がつく</a>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+
+    </script>
+</body>
+
+</html>

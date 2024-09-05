@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>最低限覚えておきたい現れ方 - じわっ</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        @charset "utf-8";
+
+        /*==================================================
+        じわっ
+        ===================================*/
+
+        /* ぼかしから出現 */
+        .blur{
+        animation-name:blurAnime;
+        animation-duration:1s;
+        animation-fill-mode:forwards;
+        }
+
+        @keyframes blurAnime{
+        from {
+        filter: blur(10px);
+        transform: scale(1.02);
+        }
+
+        to {
+        filter: blur(0);
+        transform: scale(1);
+        }
+        }
+
+        /*========= レイアウトのためのCSS ===============*/
+        p{
+        margin:50px 0;
+        }
+
+        .box{
+        width: 220px;
+        padding: 20px;
+        background: #666;
+        color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <h1 class="title">最低限覚えておきたい現れ方 - じわっ</h1>
+        <div id="content">
+            <!--じわっ-->
+            <div class="box blur">ぼかしから出現</div>
+        </div>
+    </div>
+</body>
+</html>

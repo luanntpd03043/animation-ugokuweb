@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>滑らかに出現</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        /*========= レイアウトのためのCSS ===============*/
+        body {
+            background: #333;
+        }
+
+        p {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 20px;
+            color: #fff;
+        }
+
+
+        /*========= 光りながら出現させるためのCSS ===============*/
+
+        .glowAnime span {
+            opacity: 0;
+        }
+
+        /*アニメーションで透過を0から1に変化させtext-shadowをつける*/
+        .glowAnime.glow span {
+            animation: glow_anime_on 1s ease-out forwards;
+        }
+
+        @keyframes glow_anime_on {
+            0% {
+                opacity: 0;
+                text-shadow: 0 0 0 #fff, 0 0 0 #fff;
+            }
+
+            50% {
+                opacity: 1;
+                text-shadow: 0 0 10px #fff, 0 0 15px #fff;
+            }
+
+            100% {
+                opacity: 1;
+                text-shadow: 0 0 0 #fff, 0 0 0 #fff;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <h1 class="title">滑らかに出現</h1>
+        <div id="content">
+            <p class="glowAnime">テキストがほのかに光りながら出現します</p>
+
+            <p><br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓</p>
+
+            <p class="glowAnime">テキストがほのかに光りながら出現します</p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        // glowAnimeにglowというクラス名を付ける定義
+        function GlowAnimeControl() {
+            $('.glowAnime').each(function () {
+                var elemPos = $(this).offset().top - 50;
+                var scroll = $(window).scrollTop();
+                var windowHeight = $(window).height();
+                if (scroll >= elemPos - windowHeight) {
+                    $(this).addClass("glow");
+
+                } else {
+                    $(this).removeClass("glow");
+                }
+            });
+        }
+
+        // 画面をスクロールをしたら動かしたい場合の記述
+        $(window).scroll(function () {
+            GlowAnimeControl();/* アニメーション用の関数を呼ぶ*/
+        });// ここまで画面をスクロールをしたら動かしたい場合の記述
+
+        // 画面が読み込まれたらすぐに動かしたい場合の記述
+        $(window).on('load', function () {
+            //spanタグを追加する
+            var element = $(".glowAnime");
+            element.each(function () {
+                var text = $(this).text();
+                var textbox = "";
+                text.split('').forEach(function (t, i) {
+                    if (t !== " ") {
+                        if (i < 10) {
+                            textbox += '<span style="animation-delay:.' + i + 's;">' + t + '</span>';
+                        } else {
+                            var n = i / 10;
+                            textbox += '<span style="animation-delay:' + n + 's;">' + t + '</span>';
+                        }
+
+                    } else {
+                        textbox += t;
+                    }
+                });
+                $(this).html(textbox);
+            });
+
+            GlowAnimeControl();/* アニメーション用の関数を呼ぶ*/
+        });// ここまで画面が読み込まれたらすぐに動かしたい場合の記述
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>流れるように出現（上から下）</title>
+  <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+  <style>
+    /*========= レイアウトのためのCSS ===============*/
+
+    p {
+      margin: 20px;
+      font-size: 20px;
+      overflow: hidden;
+      /*左右アニメーションで画面からはみ出る際に出る横スクロールバーを隠す*/
+    }
+
+    /*========= 流れるテキスト ===============*/
+
+    /*全共通*/
+
+    .slide-in {
+      overflow: hidden;
+      display: inline-block;
+    }
+
+    .slide-in_inner {
+      display: inline-block;
+
+    }
+
+    /* 上下のアニメーション*/
+    .upAnime {
+      opacity: 0;
+      /* 事前に透過0 にして消しておく*/
+    }
+
+    .slideAnimeDownUp {
+      animation-name: slideTextY100;
+      animation-duration: 0.8s;
+      animation-fill-mode: forwards;
+      opacity: 0;
+    }
+
+    @keyframes slideTextY100 {
+      from {
+        transform: translateY(100%);
+        /* 要素を上の枠外に移動*/
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        /* 要素を元の位置に移動*/
+        opacity: 1;
+      }
+    }
+
+    .slideAnimeUpDown {
+      animation-name: slideTextY-100;
+      animation-duration: 0.8s;
+      animation-fill-mode: forwards;
+      opacity: 0;
+    }
+
+    @keyframes slideTextY-100 {
+      from {
+        transform: translateY(-100%);
+        /* 要素を下の枠外に移動*/
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        /* 要素を元の位置に移動*/
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrapper">
+    <h1 class="title">流れるように出現（上から下）</h1>
+    <div id="content">
+      <p>
+        <span class="slide-in upAnime">
+          <span class="slide-in_inner upAnimeInner">上から下へテキストが流れます。上から下へテキストが流れます。</span>
+        </span>
+      </p>
+
+      <p><br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br></p>
+
+      <p>
+        <span class="slide-in upAnime">
+          <span class="slide-in_inner upAnimeInner">上から下へテキストが流れます。上から下へテキストが流れます。</span>
+        </span>
+      </p>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
+    function slideAnime() {
+      //====上に動くアニメーションここから===
+      $('.upAnime').each(function () {
+        var elemPos = $(this).offset().top - 50;
+        var scroll = $(window).scrollTop();
+        var windowHeight = $(window).height();
+        if (scroll >= elemPos - windowHeight) {
+          // 上から下へ表示するクラスを付与
+          // テキスト要素を挟む親要素（上）とテキスト要素を元位置でアニメーションをおこなう
+          $(this).addClass("slideAnimeUpDown");
+          // 要素を上枠外に移動しCSS アニメーションで上から元の位置に移動
+          $(this).children(".upAnimeInner").addClass("slideAnimeDownUp");
+          // 子要素は親要素のアニメーションに影響されないように逆の指定をし元の位置をキープするアニメーションをおこなう
+        } else {
+          // 上から下へ表示するクラスを取り除く
+          $(this).removeClass("slideAnimeUpDown");
+          $(this).children(".upAnimeInner").removeClass("slideAnimeDownUp");
+        }
+      });
+    }
+
+    // 画面をスクロールをしたら動かしたい場合の記述
+    $(window).scroll(function () {
+      slideAnime();/* アニメーション用の関数を呼ぶ*/
+    });// ここまで画面をスクロールをしたら動かしたい場合の記述
+
+    // 画面が読み込まれたらすぐに動かしたい場合の記述
+    $(window).on('load', function () {
+      slideAnime();/* アニメーション用の関数を呼ぶ*/
+    });// ここまで画面が読み込まれたらすぐに動かしたい場合の記述
+  </script>
+</body>
+
+</html>

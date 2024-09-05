@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>枠線＋テキスト</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        /*　枠線＋テキストが出現 　*/
+
+        .lineText {
+            position: relative;
+            /*テキストの基点となる位置を定義*/
+        }
+
+        /*線の設定*/
+        .lineText span.mask {
+            position: relative;
+            display: block;
+            /*画像をくくるspanタグをブロック要素にする*/
+            line-height: 0;
+            /*行の高さを0にする*/
+        }
+
+        .lineText span.mask::before,
+        .lineText span.mask::after {
+            position: absolute;
+            top: 4%;
+            right: 2.5%;
+            bottom: 4%;
+            left: 2.5%;
+            z-index: 3;
+            content: "";
+            opacity: 0;
+            transition: .3s ease-in-out;
+            /*移り変わる速さを変更したい場合はこの数値を変更*/
+        }
+
+        .lineText span.mask::before {
+            border-top: 1px solid #fff;
+            /*枠線の色と太さを変更したい場合はこの数値を変更*/
+            border-bottom: 1px solid #fff;
+            /*枠線の色と太さを変更したい場合はこの数値を変更*/
+            transform: scale(0, 1);
+        }
+
+        .lineText span.mask::after {
+            border-right: 1px solid #fff;
+            /*枠線の色と太さを変更したい場合はこの数値を変更*/
+            border-left: 1px solid #fff;
+            /*枠線の色と太さを変更したい場合はこの数値を変更*/
+            transform: scale(1, 0);
+        }
+
+        .lineText:hover span.mask::before,
+        .lineText:hover span.mask::after {
+            /*hoverした時の変化*/
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /*中央テキスト*/
+        .lineText span.cap {
+            opacity: 0;
+            transition: .5s ease-in-out;
+            /*移り変わる速さを変更したい場合はこの数値を変更*/
+            position: absolute;
+            z-index: 3;
+            /*テキストを前面に出す*/
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            /*テキストの色を変えたい場合はここを修正*/
+            line-height: 1.5;
+            /*行の高さを1.5にする*/
+        }
+
+        .lineText:hover span.cap {
+            /*hoverした時の変化*/
+            opacity: 1;
+        }
+
+        /*========= レイアウトのためのCSS ===============*/
+
+        a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .lead {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        /*画像のレスポンシブ*/
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* 横幅*/
+        .lineText {
+            width: 70%;
+            margin: 0 auto;
+            /*中央揃え*/
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <h1 class="title">枠線＋テキスト</h1>
+        <div id="content">
+            <div class="lineText">
+                <a href="#">
+                    <span class="mask">
+                        <img src="img/02.jpg" alt="">
+                        <span class="cap">枠線＋テキストが出現 LineText</span>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

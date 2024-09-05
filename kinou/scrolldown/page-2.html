@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>無限スクロール</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        /*==================================================
+スクロール読み込みのcss
+===================================*/
+
+        /*ローディングが表示されるエリアの設定*/
+        #infscr-loading {
+            width: 100%;
+            text-align: center;
+            margin: 20px auto;
+
+        }
+
+        #infscr-loading img {
+            width: 30px;
+            margin: 0 auto;
+            /*ローディング画像のサイズ*/
+        }
+
+        /*========= レイアウトのためのCSS ===============*/
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        a {
+            color: #333;
+        }
+
+        a:hover,
+        a:active {
+            text-decoration: none;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 4vw;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin: 30px 0;
+        }
+
+        .lead {
+            padding: 0 0 50px 0;
+            text-align: center;
+        }
+
+        .article-list {
+            width: 90%;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .article-list .day {
+            font-size: 15px;
+            color: #666;
+            margin: 0 0 10px 0;
+        }
+
+        .article-list h2 {
+            font-size: 16px;
+        }
+
+        .article-list li {
+            width: 48%;
+            margin: 0 0 20px 0;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .article-list li {
+                width: 100%;
+            }
+        }
+
+        .article-list li a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            text-decoration: none;
+            box-shadow: 0 0 5px #ccc;
+            transition: all 0.5s;
+        }
+
+        .article-list li a:hover {
+            box-shadow: 0 0 15px #ccc;
+        }
+
+
+        .article-list .img-block {
+            width: 40%;
+        }
+
+        .article-list .img-block img {
+            width: 100%;
+            height: auto;
+
+        }
+
+        .article-list .content-block {
+            width: 56%;
+        }
+
+        .navigation {
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <h1>Infinite Scroll</h1>
+            <p class="lead">無限スクロールに使用したライブラリ：<a href="https://infinite-scroll.com/" target="_blank">https://infinite-scroll.com/</a><br>※サーバーに上げないと、動作確認はできません。</p>
+
+
+            <ul class="article-list">
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/01.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/02.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/03.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/04.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/05.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/06.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/07.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/08.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/09.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/10.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/11.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/12.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/13.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/14.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/15.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/16.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/17.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/18.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/19.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/20.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/21.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/22.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/23.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/24.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/25.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/26.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/27.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/28.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/29.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>タイトルタイトルタイトル</h2>
+                        </section>
+                    </a></li>
+                <li><a href="#">
+                        <figure class="img-block">
+                            <img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/img/30.jpg" alt="">
+                        </figure>
+                        <section class="content-block">
+                            <p class="day">2020.11.04</p>
+                            <h2>1ページ目の最後の記事</h2>
+                        </section>
+                    </a></li>
+            </ul>
+
+            <!--page-X.htmlの数字の部分は自動的に連番が付与されて読み込まれる-->
+            <div class="navigation"><a href="page-2.html">続きを表示</a></div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-infinitescroll/2.1.0/jquery.infinitescroll.min.js"></script>
+    <script>
+        //無限読み込みInfiniteScroll
+        $('.article-list').infinitescroll({	//無限読み込みをさせたい要素を囲う親のクラス名を指定
+            navSelector: ".navigation",//次のページを読み込むリンクを囲んでいるクラス名を指定
+            nextSelector: ".navigation a",//次のページにリンクする要素を指定
+            itemSelector: ".article-list li",//無限スクロールで表示をさせたい要素を指定
+            maxPage: 3,///読み込む全体のページ数。入れないと連番でURLが読まれて404エラーが出る
+            animate: true, //アニメーション処理を行う
+            loading: {
+                finishedMsg: "全ての記事が読み込まれました", //全ての要素が読み込まれた後の終了メッセージ
+                msgText: "読み込み中", //ローディング中の表示テキスト
+                img: 'https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-1-7/svg/loading.svg', //ローディング中の画像を指定
+            },
+        });
+
+        $('.article-list').hide().delay(100).fadeIn(900);//0.9秒かけてフェードイン
+    </script>
+</body>
+
+</html>

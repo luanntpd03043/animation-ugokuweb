@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>紙吹雪が舞う</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        /*========= レイアウトのためのCSS ===============*/
+
+        #wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+        }
+
+        a {
+            color: #fff;
+        }
+
+        /*========= particle js を描画するエリア設定 ===============*/
+
+        html,
+        body {
+            height: 100%;
+            /*高さを100%にして描画エリアをとる*/
+        }
+
+        #particles-js {
+            position: fixed;
+            /*描画固定*/
+            z-index: -1;
+            /*描画を一番下に*/
+            width: 100%;
+            height: 100%;
+            background-color: #070A31;
+            /*背景色*/
+        }
+
+        #wrap {
+            position: relative;
+            /*描画を#particles-jsよりも上にするためposition:relative;を指定*/
+            z-index: 1;
+            /*z-indexの数字を大きくすることで描画を#particles-jsよりも上に*/
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <div id="particles-js"></div>
+            <div id="wrap">
+                <p>コンテンツが入ります<br>※使用したライブラリ<a href="https://vincentgarreau.com/particles.js/" target="_blank">https://vincentgarreau.com/particles.js/</a></p>
+                <!--/wrapper-->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 125,//この数値を変更すると紙吹雪の数が増減できる
+                    "density": {
+                        "enable": false,
+                        "value_area": 400
+                    }
+                },
+                "color": {
+                    "value": ["#EA5532", "#F6AD3C", "#FFF33F", "#00A95F", "#00ADA9", "#00AFEC", "#4D4398", "#E85298"]//紙吹雪の色の数を増やすことが出来る
+                },
+                "shape": {
+                    "type": "polygon",//形状はpolygonを指定
+                    "stroke": {
+                        "width": 0,
+                    },
+                    "polygon": {
+                        "nb_sides": 5//多角形の角の数
+                    }
+                },
+                "opacity": {
+                    "value": 1,
+                    "random": false,
+                    "anim": {
+                        "enable": true,
+                        "speed": 20,
+                        "opacity_min": 0,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 5.305992965476349,
+                    "random": true,//サイズをランダムに
+                    "anim": {
+                        "enable": true,
+                        "speed": 1.345709068776642,
+                        "size_min": 0.8,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": false,
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 10,//この数値を小さくするとゆっくりな動きになる
+                    "direction": "bottom",//下に向かって落ちる
+                    "random": false,//動きはランダムにならないように
+                    "straight": false,//動きをとどめない
+                    "out_mode": "out",//画面の外に出るように描写
+                    "bounce": false,//跳ね返りなし
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": false,
+                    },
+                    "onclick": {
+                        "enable": false,
+                    },
+                    "resize": true
+                },
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+
+</html>

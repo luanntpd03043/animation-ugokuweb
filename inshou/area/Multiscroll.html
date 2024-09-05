@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>スクロールすると画面分割した左右がそれぞれ動く</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        /*========= レイアウトのためのCSS ===============*/
+
+        body {
+            word-break: break-all;
+        }
+
+        /* HEADER */
+
+        #header {
+            position: relative;
+            z-index: 999;
+            /*装飾のためのCSS*/
+            background: #222;
+            color: #f2f2f2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 20px;
+        }
+
+
+        /*全体のエリア設定*/
+
+        .ms-section {
+            color: #fff;
+            padding: 20px;
+        }
+
+        .ms-section a {
+            color: #fff;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            margin: 0 0 20px 0;
+            text-align: center;
+        }
+
+        p {
+            margin: 0 0 20px 0;
+        }
+
+        /*右にある丸ナビゲーション色*/
+
+        #multiscroll-nav span {
+            background: transparent !important;
+            border-color: #fff !important;
+        }
+
+        /*右にある丸のナビゲーション現在地色*/
+
+        #multiscroll-nav li .active span {
+            background: #fff !important;
+        }
+
+        /*右上のナビゲーション*/
+
+        #menu li {
+            display: inline-block;
+            margin: 10px;
+        }
+
+        #menu li a {
+            text-decoration: none;
+            color: #fff;
+            padding: 5px 10px;
+            display: block;
+            border-radius: 10px;
+        }
+
+        #menu li.active a {
+            color: #666;
+        }
+
+
+        /*右エリア画像設定*/
+
+        #right1 {
+            background: url("img/daniel-chen-546446-unsplash.jpg") no-repeat center;
+            background-size: cover;
+        }
+
+        #right2 {
+            background: url("img/hisu-lee-169301-unsplash.jpg") no-repeat center;
+            background-size: cover;
+        }
+
+        #right3 {
+            background: url("img/jeff-sheldon-3226-unsplash.jpg") no-repeat center;
+            background-size: cover;
+        }
+
+        #right4 {
+            background: url("img/hisu-lee-169301-unsplash.jpg") no-repeat center;
+            background-size: cover;
+        }
+
+        #right5 {
+            background: url("img/jeff-sheldon-3226-unsplash.jpg") no-repeat center;
+            background-size: cover;
+        }
+
+        #right6 {
+            background: url("img/hisu-lee-169301-unsplash.jpg") no-repeat center;
+            background-size: cover;
+        }
+
+        /*＝＝＝＝＝＝＝＝＝＝＝タブレット以下の見え方＝＝＝＝＝＝＝＝＝＝＝＝＝*/
+
+        @media screen and (max-width:768px) {
+
+            #header {
+                justify-content: center;
+            }
+
+            /*全体のボックスについている余白をリセット*/
+            .ms-section {
+                padding: 0;
+            }
+
+            /*天地中央になっている見せ方を上ぞろえに上書き*/
+            .ms-tableCell {
+                vertical-align: top;
+            }
+
+            /*右上ナビゲーションと右エリア非表示*/
+            #menu,
+            .ms-right {
+                display: none;
+            }
+
+            /*左エリアを横幅100%にして画像＋テキストを出す設定*/
+            .ms-left {
+                width: 100% !important;
+            }
+
+            /*左エリア上部画像設定*/
+            .sp-top {
+                height: 50%;
+                margin: 0 0 20px 0;
+            }
+
+            #left1 .sp-top {
+                background: url("img/daniel-chen-546446-unsplash.jpg") no-repeat center;
+                background-size: cover;
+            }
+
+            #left2 .sp-top {
+                background: url("img/hisu-lee-169301-unsplash.jpg") no-repeat center;
+                background-size: cover;
+            }
+
+            #left3 .sp-top {
+                background: url("img/jeff-sheldon-3226-unsplash.jpg") no-repeat center;
+                background-size: cover;
+            }
+
+            #left4 .sp-top {
+                background: url("img/daniel-chen-546446-unsplash.jpg") no-repeat center;
+                background-size: cover;
+            }
+
+            #left5 .sp-top {
+                background: url("img/hisu-lee-169301-unsplash.jpg") no-repeat center;
+                background-size: cover;
+            }
+
+            #left6 .sp-top {
+                background: url("img/jeff-sheldon-3226-unsplash.jpg") no-repeat center;
+                background-size: cover;
+            }
+
+            /*左エリア下部テキスト余白設定*/
+            .sp-bottom {
+                padding: 20px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <header id="header">
+            <h1>Logo</h1>
+            <nav>
+                <ul id="menu">
+                    <li data-menuanchor="area1" class="active"><a href="#area1">Area 1</a></li>
+                    <li data-menuanchor="area2"><a href="#area2">Area 2</a></li>
+                    <li data-menuanchor="area3"><a href="#area3">Area 3</a></li>
+                    <li data-menuanchor="area4"><a href="#area4">Area 4</a></li>
+                    <li data-menuanchor="area5"><a href="#area5">Area 5</a></li>
+                    <li data-menuanchor="area6"><a href="#area6">Area 6</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div id="content">
+            <div class="ms-left">
+                <section class="ms-section" id="left1">
+                    <div class="sp-top"></div>
+                    <div class="sp-bottom">
+                        <h2>Area 1</h2>
+                        <p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+                    </div>
+                    <!--/left1-->
+                </section>
+
+                <section class="ms-section" id="left2">
+                    <div class="sp-top"></div>
+                    <div class="sp-bottom">
+                        <h2>Area 2</h2>
+                        <p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+                    </div>
+                    <!--/left2-->
+                </section>
+
+                <section class="ms-section" id="left3">
+                    <div class="sp-top"></div>
+                    <div class="sp-bottom">
+                        <h2>Area 3</h2>
+                        <p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+                    </div>
+                    <!--/left3-->
+                </section>
+
+                <section class="ms-section" id="left4">
+                    <div class="sp-top"></div>
+                    <div class="sp-bottom">
+                        <h2>Area 4</h2>
+                        <p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+                    </div>
+                    <!--/left4-->
+                </section>
+
+                <section class="ms-section" id="left5">
+                    <div class="sp-top"></div>
+                    <div class="sp-bottom">
+                        <h2>Area 5</h2>
+                        <p>テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。テキストが入ります。</p>
+                    </div>
+                    <!--/left5-->
+                </section>
+
+                <section class="ms-section" id="left6">
+                    <div class="sp-top"></div>
+                    <div class="sp-bottom">
+                        <h2>Area 6</h2>
+                        <p>参照： <a href="https://alvarotrigo.com/multiScroll/" target="_blank">https://alvarotrigo.com/multiScroll/</a></p>
+                        <p>レスポンシブに対応したい場合は有料プラグイン（<a href="https://alvarotrigo.com/multiScroll/extensions/" target="_blank">https://alvarotrigo.com/multiScroll/extensions/</a>）の購入が必要です。<br>※サンプルは右カラムを非表示にする形で疑似的にレスポンシブ化をしています。</p>
+                    </div>
+                    <!--/left6-->
+                </section>
+                <!--/ms-left-->
+            </div>
+
+            <div class="ms-right">
+                <div class="ms-section" id="right1"></div>
+                <div class="ms-section" id="right2"></div>
+                <div class="ms-section" id="right3"></div>
+                <div class="ms-section" id="right4"></div>
+                <div class="ms-section" id="right5"></div>
+                <div class="ms-section" id="right6"></div>
+                <!--/ms-right-->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/multiscroll.js/0.2.2/jquery.multiscroll.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script>
+        $('#wrapper').multiscroll({
+            sectionsColor: ['#333', '#444', '#555','#333', '#444', '#555'],//セクションごとの背景色設定
+            anchors: ['area1', 'area2', 'area3','area4','area5','area6'],//セクションとリンクするページ内アンカーになる名前
+            menu: '#menu',//上部ナビゲーションのメニュー設定
+            navigation: true,//右のナビゲーション出現、非表示は false
+            navigationTooltips:['Area1', 'Area2', 'Area3','Area4','Area5','Area6'],//右のナビゲーション現在地時に入るテキスト
+            loopTop: true,//最初のセクションを上にスクロールして最後のセクションまでスクロールするかどうかを定義します。
+            loopBottom: true,//最後のセクションを下にスクロールして最初のセクションまでスクロールするかどうかを定義します。
+        });
+    </script>
+</body>
+
+</html>

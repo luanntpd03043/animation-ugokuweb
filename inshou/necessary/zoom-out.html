@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>最低限覚えておきたい現れ方 - ヒュッ</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        @charset "utf-8";
+
+        /*==================================================
+        ヒュッ
+        ===================================*/
+
+        /* 縮小 */
+        .zoomOut{
+        animation-name:zoomOutAnime;
+        animation-duration:0.5s;
+        animation-fill-mode:forwards;
+        }
+
+        @keyframes zoomOutAnime{
+        from {
+        transform: scale(1.2);
+        }
+
+        to {
+            transform:scale(1);
+        }
+        }
+
+        /*========= レイアウトのためのCSS ===============*/
+        p{
+        margin:50px 0;
+        }
+
+        .box{
+        width: 220px;
+        padding: 20px;
+        background: #666;
+        color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <h1 class="title">最低限覚えておきたい現れ方 - ヒュッ</h1>
+        <div id="content">
+            <!--ヒュッ-->
+            <div class="box zoomOut">ヒュッ（縮小）</div>
+        </div>
+    </div>
+</body>
+</html>

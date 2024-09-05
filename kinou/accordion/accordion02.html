@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>任意の場所をクリックすると隠れていた内容が開く</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        /*==================================================
+アコーディオンのためのcss
+===================================*/
+
+        /*アコーディオン全体*/
+        .accordion-area {
+            list-style: none;
+            width: 96%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .accordion-area li {
+            margin: 10px 0;
+        }
+
+        .accordion-area section {
+            border: 1px solid #ccc;
+        }
+
+        /*アコーディオンタイトル*/
+        .titleAr {
+            position: relative;
+            /*+マークの位置基準とするためrelative指定*/
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: normal;
+            padding: 3% 3% 3% 50px;
+            transition: all .5s ease;
+        }
+
+        /*アイコンの＋と×*/
+        .titleAr::before,
+        .titleAr::after {
+            position: absolute;
+            content: '';
+            width: 15px;
+            height: 2px;
+            background-color: #333;
+
+        }
+
+        .titleAr::before {
+            top: 48%;
+            left: 15px;
+            transform: rotate(0deg);
+
+        }
+
+        .titleAr::after {
+            top: 48%;
+            left: 15px;
+            transform: rotate(90deg);
+
+        }
+
+        /*　closeというクラスがついたら形状変化　*/
+
+        .titleAr.close::before {
+            transform: rotate(45deg);
+        }
+
+        .titleAr.close::after {
+            transform: rotate(-45deg);
+        }
+
+        /*アコーディオンで現れるエリア*/
+        .box {
+            display: none;
+            /*はじめは非表示*/
+            background: #f3f3f3;
+            margin: 0 3% 3% 3%;
+            padding: 3%;
+        }
+
+
+        /*========= レイアウトのためのCSS ===============*/
+
+        h2 {
+            text-align: center;
+            margin: 30px 0;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <h2>9-2-2 任意の場所をクリックすると隠れていた内容が開き、先に開いていた内容が閉じる</h2>
+            <ul class="accordion-area">
+                <li>
+                    <section>
+                        <h3 class="titleAr">お見積もりの目安を教えてください。</h3>
+                        <div class="box">
+                            <p>内容によって変化いたしますのでまずはお問い合わせフォームよりご相談ください。</p>
+                        </div>
+                    </section>
+                </li>
+                <li>
+                    <section>
+                        <h3 class="titleAr">地方ですが発注は可能でしょうか</h3>
+                        <div class="box">
+                            <p>可能です。お気軽にご相談ください。</p>
+                        </div>
+                    </section>
+                </li>
+                <li>
+                    <section>
+                        <h3 class="titleAr">セミナーやイベントの出演を依頼したいのですが</h3>
+                        <div class="box ">
+                            <p>お問い合わせフォームより日時や内容などをご記入いただきご相談ください。</p>
+                        </div>
+                    </section>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        //アコーディオンをクリックした時の動作
+        $('.titleAr').on('click', function () {//タイトル要素をクリックしたら
+            $('.box').slideUp(500);//クラス名.boxがついたすべてのアコーディオンを閉じる
+
+            var findElm = $(this).next(".box");//タイトル直後のアコーディオンを行うエリアを取得
+
+            if ($(this).hasClass('close')) {//タイトル要素にクラス名closeがあれば
+                $(this).removeClass('close');//クラス名を除去    
+            } else {//それ以外は
+                $('.close').removeClass('close'); //クラス名closeを全て除去した後
+                $(this).addClass('close');//クリックしたタイトルにクラス名closeを付与し
+                $(findElm).slideDown(500);//アコーディオンを開く
+            }
+        });
+
+        //ページが読み込まれた際にopenクラスをつけ、openがついていたら開く動作※不必要なら下記全て削除
+        $(window).on('load', function () {
+            $('.accordion-area li:first-of-type section').addClass("open"); //accordion-areaのはじめのliにあるsectionにopenクラスを追加
+            $(".open").each(function (index, element) { //openクラスを取得
+                var Title = $(element).children('.titleAr'); //openクラスの子要素のtitleクラスを取得
+                $(Title).addClass('close');       ///タイトルにクラス名closeを付与し
+                var Box = $(element).children('.box'); //openクラスの子要素boxクラスを取得
+                $(Box).slideDown(500);          //アコーディオンを開く
+            });
+        });
+    </script>
+</body>
+
+</html>

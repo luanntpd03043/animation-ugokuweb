@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>グラデーションが縮小する</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        /*== グラデーションが縮小する */
+
+        .gradient2 {
+            /*ボタンの形状*/
+            display: inline-block;
+            color: #fff;
+
+            padding: 18px 60px;
+            border-radius: 30px;
+            text-decoration: none;
+            outline: none;
+            /*背景の色と形状*/
+            background: linear-gradient(to right, #52A0FD 0%, #00e2fa 80%, #00e2fa 100%);
+            box-shadow: 0 15px 15px rgba(82, 160, 253, 0.4);
+            /*アニメーションの指定*/
+            transition: all 0.3s ease-out;
+        }
+
+        /*hoverした際のスケールで全体を縮小*/
+        .gradient2:hover {
+            transform: scale(0.95);
+        }
+
+        /*========= レイアウトのためのCSS ===============*/
+
+        body {
+            vertical-align: middle;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        p {
+            margin: 0 0 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <a href="#" class="gradient2">7-1-30 グラデーションが縮小する</a>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+
+    </script>
+</body>
+
+</html>

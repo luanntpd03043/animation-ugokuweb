@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>複合検索でカテゴリ別に画像を並び替える</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+    <style>
+        /*==================================================
+ギャラリーのためのcss
+===================================*/
+        /*＝＝＝並び替えボタンチェックマークのCSS*/
+        .sort-btn {
+            background: #f3f3f3;
+            padding: 20px;
+            margin: 50px 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .sort-btn dt {
+            font-weight: bold;
+            margin: 0 0 10px 0;
+        }
+
+        .sort-btn dd {
+            margin: 0 0 10px 0;
+        }
+
+        .sort-btn ul {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .sort-btn li {
+            margin: 0 10px;
+        }
+
+        .sort-btn ul li {
+            position: relative;
+            cursor: pointer;
+            padding: 0 0 0 30px;
+            margin: 0 10px 0 0;
+        }
+
+        /*横幅が810px以下になった際の指定*/
+        @media only screen and (max-width: 810px) {
+            .sort-btn li {
+                width: 100%;
+                margin: 0;
+            }
+
+            .sort-btn ul li {
+                width: auto;
+            }
+
+        }
+
+        /*チェックマークの設定*/
+        .sort-btn ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ccc;
+        }
+
+        .sort-btn ul li.active::after {
+            /*現在地＝activeというクラス名がついたらチェックマークを出現*/
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 0;
+            /*チェックマークの色や形*/
+            border-left: 2px solid #333;
+            border-bottom: 2px solid #333;
+            width: 16px;
+            height: 9px;
+            transform: rotate(-45deg);
+        }
+
+
+
+        /*＝＝＝Muuriのレイアウトのための調整 */
+        .grid {
+            position: relative;
+            /*並び替えの基準点を指定*/
+        }
+
+        /*各画像の横幅などの設定*/
+        .item {
+            display: block;
+            position: absolute;
+            width: 33%;
+            /*横並びで3つ表示*/
+            padding: 0 10px 10px 10px;
+            /*画像に余白をつける*/
+            z-index: 1;
+        }
+
+        /*内側のボックスの高さが崩れないように維持*/
+        .item-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        /*画像の横幅を100%にしてレスポンシブ化*/
+        .grid img {
+            width: 100%;
+            height: auto;
+            vertical-align: bottom;
+            /*画像の下にできる余白を削除*/
+        }
+
+        /*横幅が768px以下になった際の指定*/
+        @media only screen and (max-width: 768px) {
+            .item {
+                width: 49.5%;
+                /*横並びで2つ表示*/
+                padding: 0 5px 10px 5px;
+            }
+        }
+
+
+        /*＝＝＝fancyboxサムネイル背景と画像選択時の枠線の指定*/
+        .fancybox-thumbs {
+            background: transparent !important;
+        }
+
+        .fancybox-thumbs__list a:before {
+            border: 6px solid #FA999B;
+        }
+
+        /*========= レイアウトのためのCSS ===============*/
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        a {
+            color: #333;
+        }
+
+        a:hover,
+        a:active {
+            text-decoration: none;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 6vw;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin: 30px 0;
+        }
+
+        p {
+            margin: 0 10px 10px 10px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <div class="wrapper">
+                <h1>Gallery</h1>
+                <p>画像一覧の列調整と並び替えで使用したライブラリ：<a href="https://haltu.github.io/muuri/" target="_blank">https://haltu.github.io/muuri/</a></p>
+                <p>画像拡大に使用したライブラリ：<a href="http://fancyapps.com/fancybox/3/" target="_blank">http://fancyapps.com/fancybox/3/</a><br>※商用利用の場合fancyboxは有料になります。公式サイトを参照してください。</p>
+
+                <ul class="sort-btn">
+                    <li>
+                        <dl>
+                            <dt>All</dt>
+                            <dd>
+                                <ul>
+                                    <li class="all active">全て</li>
+                                </ul>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>Color</dt>
+                            <dd>
+                                <ul>
+                                    <li class="color01">Color1</li>
+                                    <li class="color02">Color2</li>
+                                    <li class="color03">Color3</li>
+                                </ul>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>Category</dt>
+                            <dd>
+                                <ul>
+                                    <li class="cat01">カテゴリ1</li>
+                                    <li class="cat02">カテゴリ2</li>
+                                    <li class="cat03">カテゴリ3</li>
+                                </ul>
+                            </dd>
+                        </dl>
+                    </li>
+                    <!--/sort-btn-->
+                </ul>
+
+                <ul class="grid">
+                    <li class="item cat01 color01">
+                        <div class="item-content">
+                            <a href="img/filter/01.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/01.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat01 cat02 color01">
+                        <div class="item-content">
+                            <a href="img/filter/02.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/02.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat03 color02">
+                        <div class="item-content">
+                            <a href="img/filter/03.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/03.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat01 color02">
+                        <div class="item-content">
+                            <a href="img/filter/04.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/04.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat02 color02">
+                        <div class="item-content">
+                            <a href="img/filter/05.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/05.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat03 color03">
+                        <div class="item-content">
+                            <a href="img/filter/06.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/06.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat01 color01">
+                        <div class="item-content">
+                            <a href="img/filter/07.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/07.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat02 color02">
+                        <div class="item-content">
+                            <a href="img/filter/08.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/08.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat03 color03">
+                        <div class="item-content">
+                            <a href="img/filter/09.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/09.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat01 color02">
+                        <div class="item-content">
+                            <a href="img/filter/10.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/10.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat02 color02">
+                        <div class="item-content">
+                            <a href="img/filter/11.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/11.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat03 color03">
+                        <div class="item-content">
+                            <a href="img/filter/12.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/12.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat01 color01">
+                        <div class="item-content">
+                            <a href="img/filter/13.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/13.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat02 color02">
+                        <div class="item-content">
+                            <a href="img/filter/14.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/14.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat03 color03">
+                        <div class="item-content">
+                            <a href="img/filter/15.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/15.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat01 color01">
+                        <div class="item-content">
+                            <a href="img/filter/16.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/16.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat02 color02">
+                        <div class="item-content">
+                            <a href="img/filter/17.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/17.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat03 color03">
+                        <div class="item-content">
+                            <a href="img/filter/18.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/18.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat01 color01">
+                        <div class="item-content">
+                            <a href="img/filter/19.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/19.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat02 color02">
+                        <div class="item-content">
+                            <a href="img/filter/20.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/20.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat03 color03">
+                        <div class="item-content">
+                            <a href="img/filter/21.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/21.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat01 color01">
+                        <div class="item-content">
+                            <a href="img/filter/22.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/22.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat02 color02">
+                        <div class="item-content">
+                            <a href="img/filter/23.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/23.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat03 color03">
+                        <div class="item-content">
+                            <a href="img/filter/24.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/24.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat01 color01">
+                        <div class="item-content">
+                            <a href="img/filter/25.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/25.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat02 color02">
+                        <div class="item-content">
+                            <a href="img/filter/26.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/26.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat03 color03">
+                        <div class="item-content">
+                            <a href="img/filter/27.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/27.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat01 color01">
+                        <div class="item-content">
+                            <a href="img/filter/28.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/28.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat02 color02">
+                        <div class="item-content">
+                            <a href="img/filter/29.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/29.jpg" alt=""></a>
+                        </div>
+                    </li>
+                    <li class="item cat03 color03">
+                        <div class="item-content">
+                            <a href="img/filter/30.jpg" data-fancybox="group" data-caption="キャプション"><img src="img/filter/30.jpg" alt=""></a>
+                        </div>
+                    </li>
+                </ul>
+
+                <!--/wrapper-->
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://unpkg.com/web-animations-js@2.3.2/web-animations.min.js"></script>
+    <script src="https://unpkg.com/muuri@0.8.0/dist/muuri.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+    <script>
+        $(window).on('load', function () { //画面遷移時にギャラリーの画像が被らないように、すべての読み込みが終わった後に実行する
+
+            //＝＝＝Muuriギャラリープラグイン設定
+            var grid = new Muuri('.grid', {
+
+                //アイテムの表示速度※オプション。入れなくても動作します
+                showDuration: 600,
+                showEasing: 'cubic-bezier(0.215, 0.61, 0.355, 1)',
+                hideDuration: 600,
+                hideEasing: 'cubic-bezier(0.215, 0.61, 0.355, 1)',
+
+                // アイテムの表示/非表示状態のスタイル※オプション。入れなくても動作します
+                visibleStyles: {
+                    opacity: '1',
+                    transform: 'scale(1)'
+                },
+                hiddenStyles: {
+                    opacity: '0',
+                    transform: 'scale(0.5)'
+                }
+            });
+
+            //＝＝＝並び替えボタン設定
+            $('.sort-btn ul li').on('click', function () {//並び替えボタンをクリックしたら
+                var className = $(this).attr("class")//クリックしたボタンのクラス名を取得
+                className = className.split(' '); //「.sort-btn ul li」のクラス名を分割して配列にする
+
+                //ボタンにクラス名activeがついている場合
+                if ($(this).hasClass("active")) {
+                    if (className[0] != "all") {              //ボタンのクラス名がallでなければ
+                        $(this).removeClass("active");          //activeクラスを消す
+                        var selectElms = $(".sort-btn ul li.active"); //ボタン内にactiveクラスがついている要素を全て取得
+                        if (selectElms.length == 0) {           //取得した配列内にactiveクラスがついている要素がなければ
+                            $(".sort-btn ul li.all").addClass("active");//ボタンallにactiveを追加し
+                            grid.show('');                //ギャラリーの全ての画像を表示
+                        } else {
+                            filterDo();                 //取得した配列内にactiveクラスがついている要素があれば並び替えを行う
+                        }
+                    }
+                }
+                //ボタンにクラス名activeがついていない場合
+                else {
+                    if (className[0] == "all") {              //ボタンのクラス名にallとついていたら
+                        $(".sort-btn ul li").removeClass("active");   //ボタンのli要素の全てのactiveを削除し
+                        $(this).addClass("active");           //allにactiveクラスを付与
+                        grid.show('');                  //ギャラリーの全ての画像を表示
+                    } else {
+                        if ($(".all").hasClass("active")) {       //allクラス名にactiveクラスが付いていたら
+                            $(".sort-btn ul li.all").removeClass("active");//ボタンallのactiveクラスを消し
+                        }
+                        $(this).addClass("active");           //クリックしたチェックボックスへactiveクラスを付与
+                        filterDo();                   //並び替えを行う
+                    }
+
+                }
+
+            });
+
+            //＝＝＝画像の並び替え設定
+            function filterDo() {
+                var selectElms = $(".sort-btn ul li.active"); //全てのボタンのactive要素を取得
+                var selectElemAry = [];             //activeクラスがついているボタンのクラス名（sortXX）を保存する配列を定義
+                $.each(selectElms, function (index, selectElm) {
+                    var className = $(this).attr("class")   //activeクラスがついている全てのボタンのクラス名（sortXX）を取得
+                    className = className.split(' ');     //ボタンのクラス名を分割して配列にし、
+                    selectElemAry.push("." + className[0]);   //selectElemAry配列に、チェックのついたクラス名（sortXX）を追加
+                })
+                str = selectElemAry.join(',');        //selectElemAry配列に追加されたクラス名をカンマ区切りでテキストにして
+                grid.filter(str);               //grid.filter(str);のstrに代入し、ボタンのクラス名と<li>につけられたクラス名が一致したら出現
+            }
+
+        });
+    </script>
+</body>
+
+</html>

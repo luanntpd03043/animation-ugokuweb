@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>流れるように出現（右から左）</title>
+  <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+  <style>
+    /*========= レイアウトのためのCSS ===============*/
+
+    p {
+      margin: 20px;
+      font-size: 20px;
+      overflow: hidden;
+      /*左右アニメーションで画面からはみ出る際に出る横スクロールバーを隠す*/
+    }
+
+    /*========= 流れるテキスト ===============*/
+
+    /*全共通*/
+
+    .slide-in {
+      overflow: hidden;
+      display: inline-block;
+    }
+
+    .slide-in_inner {
+      display: inline-block;
+
+    }
+
+    /*左右のアニメーション*/
+    .rightAnime {
+      opacity: 0;
+      /*事前に透過0にして消しておく*/
+    }
+
+    .slideAnimeLeftRight {
+      animation-name: slideTextX100;
+      animation-duration: 0.8s;
+      animation-fill-mode: forwards;
+      opacity: 0;
+    }
+
+    @keyframes slideTextX100 {
+      from {
+        transform: translateX(-100%);
+        /*要素を左の枠外に移動*/
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        /*要素を元の位置に移動*/
+        opacity: 1;
+      }
+    }
+
+    .slideAnimeRightLeft {
+      animation-name: slideTextX-100;
+      animation-duration: 0.8s;
+      animation-fill-mode: forwards;
+      opacity: 0;
+    }
+
+
+    @keyframes slideTextX-100 {
+      from {
+        transform: translateX(100%);
+        /*要素を右の枠外に移動*/
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        /*要素を元の位置に移動*/
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrapper">
+    <h1 class="title">流れるように出現（右から左）</h1>
+    <div id="content">
+      <p>
+        <span class="slide-in rightAnime">
+          <span class="slide-in_inner rightAnimeInner">右から左へテキストが流れます。右から左へテキストが流れます。</span>
+        </span>
+      </p>
+
+      <p><br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br></p>
+
+      <p>
+        <span class="slide-in rightAnime">
+          <span class="slide-in_inner rightAnimeInner">右から左へテキストが流れます。右から左へテキストが流れます。</span>
+        </span>
+      </p>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
+    function slideAnime() {
+      //====右に動くアニメーションここから===
+      $('.rightAnime').each(function () {
+        var elemPos = $(this).offset().top - 50;
+        var scroll = $(window).scrollTop();
+        var windowHeight = $(window).height();
+        if (scroll >= elemPos - windowHeight) {
+          // 右から左へ表示するクラスを付与
+          // テキスト要素を挟む親要素（右側）とテキスト要素を元位置でアニメーションをおこなう
+          $(this).addClass("slideAnimeRightLeft ");
+          // 要素を右枠外にへ移動しCSS アニメーションで右から元の位置に移動
+          $(this).children(".rightAnimeInner").addClass("slideAnimeLeftRight");
+          // 子要素は親要素のアニメーションに影響されないように逆の指定をし元の位置をキープするアニメーションをおこなう
+        } else {
+          // 右から左へ表示するクラスを取り除く
+          $(this).removeClass("slideAnimeRightLeft ");
+          $(this).children(".rightAnimeInner").removeClass("slideAnimeLeftRight");
+        }
+      });
+    }
+
+    // 画面をスクロールをしたら動かしたい場合の記述
+    $(window).scroll(function () {
+      slideAnime();/* アニメーション用の関数を呼ぶ*/
+    });// ここまで画面をスクロールをしたら動かしたい場合の記述
+
+    // 画面が読み込まれたらすぐに動かしたい場合の記述
+    $(window).on('load', function () {
+      slideAnime();/* アニメーション用の関数を呼ぶ*/
+    });// ここまで画面が読み込まれたらすぐに動かしたい場合の記述
+  </script>
+</body>
+
+</html>

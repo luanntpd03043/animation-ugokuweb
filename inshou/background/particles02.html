@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>雪が降る</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        /*========= レイアウトのためのCSS ===============*/
+
+        #wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+        }
+
+        a {
+            color: #fff;
+        }
+
+        /*========= particle js を描画するエリア設定 ===============*/
+
+        html,
+        body {
+            height: 100%;
+            /*高さを100%にして描画エリアをとる*/
+        }
+
+        #particles-js {
+            position: fixed;
+            /*描画固定*/
+            z-index: -1;
+            /*描画を一番下に*/
+            width: 100%;
+            height: 100%;
+            background-color: #070A31;
+            /*背景色*/
+        }
+
+        #wrap {
+            position: relative;
+            /*描画を#particles-jsよりも上にするためposition:relative;を指定*/
+            z-index: 1;
+            /*z-indexの数字を大きくすることで描画を#particles-jsよりも上に*/
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <div id="particles-js"></div>
+            <div id="wrap">
+                <p>コンテンツが入ります<br>※使用したライブラリ<a href="https://vincentgarreau.com/particles.js/" target="_blank">https://vincentgarreau.com/particles.js/</a></p>
+                <!--/wrapper-->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 100,//この数値を変更すると雪の数が増減できる
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ffffff"
+                },
+                "shape": {
+                    "type": "image",//形状は画像を指定
+                    "stroke": {
+                        "width": 3,
+                        "color": "#fff"
+                    },
+                    "image": {
+                        "src": "img/snow.png",//画像を指定
+                        "width": 120,
+                        "height": 120
+                    }
+                },
+                "opacity": {
+                    "value": 0.7,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 5,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 20,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": false,
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 3,//この数値を小さくするとゆっくりな動きになる
+                    "direction": "bottom",//下に向かって落ちる
+                    "random": true,//動きはランダム
+                    "straight": false,//動きをとどめない
+                    "out_mode": "out",//画面の外に出るように描写
+                    "bounce": false,//跳ね返りなし
+                    "attract": {
+                        "enable": true,
+                        "rotateX": 300,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": false,
+                    },
+                    "onclick": {
+                        "enable": false,
+                    },
+                    "resize": true
+                }
+            },
+            "retina_detect": true
+        }); 
+    </script>
+</body>
+
+</html>

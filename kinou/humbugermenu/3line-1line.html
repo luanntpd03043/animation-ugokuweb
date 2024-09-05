@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3本線が1本線に</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+      @charset "utf-8";
+      /*==================================================
+      　5-2-3 3本線が1本線に
+      ===================================*/
+
+      /*ボタン外側※レイアウトによってpositionや形状は適宜変更してください*/
+      .openbtn3{
+        position: relative;/*ボタン内側の基点となるためrelativeを指定*/
+        background:#4C9F1E;
+        cursor: pointer;
+          width: 50px;
+          height:50px;
+        border-radius: 5px;
+      }
+
+      /*ボタン内側*/
+      .openbtn3 span{
+          display: inline-block;
+          transition: all .4s;/*アニメーションの設定*/
+          position: absolute;
+          left: 14px;
+          height: 3px;
+          border-radius: 2px;
+        background: #fff;
+          width: 45%;
+        }
+
+
+      .openbtn3 span:nth-of-type(1) {
+        top:15px; 
+      }
+
+      .openbtn3 span:nth-of-type(2) {
+        top:23px;
+      }
+
+      .openbtn3 span:nth-of-type(3) {
+        top:31px;
+      }
+
+      /*activeクラスが付与されると1・3番目の要素が2番目の要素と同じ位置になり一本線に*/
+
+      .openbtn3.active span:nth-of-type(1) ,
+      .openbtn3.active span:nth-of-type(3){
+          top: 23px;
+      }
+      /*========= レイアウトのためのCSS ===============*/
+
+      body{
+        background:#f3f3f3;
+          padding:20px;
+      }
+
+
+      a{
+        color: #333;
+        text-decoration: none;
+      }
+
+      .lead{
+        margin:20px 0 0 0;
+      }
+
+      .btn-block{
+        width:200px;  
+        padding: 30px;
+      }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+      <h1 class="title">3本線が1本線に</h1>
+      <div id="content">
+        <div class="openbtn3"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!--自作のJS-->
+    <script>
+      $(".openbtn3").click(function () {
+        $(this).toggleClass('active');
+    });
+    </script>
+</body>
+</html>

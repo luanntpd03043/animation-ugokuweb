@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>順番に現れる（CSS×JS）</title>
+    <link rel="stylesheet" href="http://design.piala-demo.info/test/ugokuweb/css/common.css" />
+    <style>
+        @charset "utf-8";
+
+        /*========= レイアウトのためのCSS ===============*/
+        .randomBox,.randomScroll{
+        display:flex;
+        flex-wrap: wrap;
+        }
+
+        .box{
+        width: 220px;
+        padding: 20px;
+            margin: 0 20px 20px 20px;
+        background: #666;
+        color: #fff;
+        box-sizing:border-box;
+            list-style: none;
+        }
+
+        /*==================================================
+        スタート時は要素自体を透過0にするためのopacity:0;を指定する
+        ===================================*/
+
+        .box{
+        opacity: 0;
+        }
+
+        /*==================================================
+        ふわっ
+        ===================================*/
+
+        .fadeUp {
+        animation-name:fadeUpAnime;
+        animation-duration:0.5s;
+        animation-fill-mode:forwards;
+        opacity: 0;
+        }
+        @keyframes fadeUpAnime{
+        from {
+            opacity: 0;
+        transform: translateY(100px);
+        }
+
+        to {
+            opacity: 1;
+        transform: translateY(0);
+        }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <h1 class="title">順番に現れる（CSS×JS）</h1>
+        <div id="content">
+            <!--ぱたっ-->
+            <ul class="randomBox">
+                <li class="box">ランダムに表示　ふわっ</li>
+                <li class="box">ランダムに表示　ふわっ</li>
+                <li class="box">ランダムに表示　ふわっ</li>
+                <li class="box">ランダムに表示　ふわっ</li>
+                <li class="box">ランダムに表示　ふわっ</li>
+            </ul>
+            
+            <br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓スクロール後にランダムに現れる<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓
+            
+            <!--スクロールしてぱたっ-->
+            <ul class="randomScroll">
+                <li class="box">ランダムに表示　ふわっ</li>
+                <li class="box">ランダムに表示　ふわっ</li>
+                <li class="box">ランダムに表示　ふわっ</li>
+                <li class="box">ランダムに表示　ふわっ</li>
+                <li class="box">ランダムに表示　ふわっ</li>
+            </ul>
+
+            <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+            <script>
+                // 動きのきっかけの起点となるアニメーションの名前を定義
+                function moveAnimation(){
+
+                //読み込まれたらすぐにランダムに出現 
+                var randomElm = $(".randomBox");//親要素取得
+                var randomElmChild = $(randomElm).children();//親の子要素を取得
+                if(!$(randomElm).hasClass("play")){ //親要素にクラス名playが付いてなければ処理をおこなう
+                    randomAnime();  
+                }
+                
+                function randomAnime(){
+                    $(randomElm).addClass("play");//親要素にplayクラスを付与
+                    var rnd = Math.floor(Math.random() * randomElmChild.length); //配列数からランダム数値を取得
+                    var moveData = "fadeUp";//アニメーション名＝CSSのクラス名を指定
+                    $(randomElmChild[rnd]).addClass(moveData);//アニメーションのクラスを追加
+                    randomElmChild.splice(rnd,1);//アニメーション追加となった要素を配列から削除
+                    if(randomElmChild.length == 0 ){//配列の残りがあるか確認
+                    $(randomElm).removeClass("play");//なくなった場合は親要素のplayクラスを削除
+                    }else{
+                    setTimeout(function(){randomAnime();},500); //0.5秒間隔でアニメーションをスタートさせる。※ランダムのスピード調整はこの数字を変更させる  
+                    }
+                    
+                }
+                
+                //スクロールしたらランダムに出現 
+                var randomElm2 = $(".randomScroll");//親要素取得
+                var randomElm2Child = $(randomElm2).children(); //親の子要素を取得
+                randomScrollAnime();
+                function randomScrollAnime(){
+                    var elemPos = $(".randomScroll").offset().top-50;//要素より、50px上まで来たら
+                    var scroll = $(window).scrollTop();
+                    var windowHeight = $(window).height();
+                    if (scroll >= elemPos - windowHeight){
+                    if(randomElm2Child.length >0 ){ //配列数以上であれば処理をおこなう
+                        var rnd = Math.floor(Math.random() * randomElm2Child.length);//配列数から表示する数値をランダムで取得
+                        var moveData ="fadeUp";//アニメーション名＝CSSのクラス名を指定
+                        if(animeFlag){//スクロールする度に動作するのでアニメーションが終わるまで処理をさせないようにする
+                        animeFlag = false;//アニメーション処理が終わるまで一時的にfalseにする
+                        $(randomElm2Child[rnd]).addClass(moveData);//アニメーションのクラスを追加
+                        setTimeout(function(){
+                            animeFlag = true;//次の処理をおこなうためにtrueに変更
+                            randomScrollAnime();//自身の処理を繰り返す
+                        },500); //0.5秒間隔で。※ランダムのスピード調整はこの数字を変更させる
+                        randomElm2Child.splice(rnd,1);//アニメーション追加となった要素を配列から削除
+                        }
+                    }
+                    
+                    }else{
+                    animeFlag = true;
+                    }
+                    
+                }
+                }
+
+                var animeFlag = true;//スクロールする度に動作するのでアニメーションが終わるまで処理をさせないようにするための定義
+
+                // 画面をスクロールをしたら動かしたい場合の記述
+                $(window).scroll(function (){
+                    moveAnimation();/* アニメーション用の関数を呼ぶ*/
+                });// ここまで画面をスクロールをしたら動かしたい場合の記述
+
+                // 画面が読み込まれたらすぐに動かしたい場合の記述
+                $(window).on('load', function(){
+                    moveAnimation();/* アニメーション用の関数を呼ぶ*/
+                });// ここまで画面が読み込まれたらすぐに動かしたい場合の記述
+            </script>
+        </div>
+    </div>
+</body>
+</html>
